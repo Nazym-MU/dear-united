@@ -1,0 +1,26 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+.claude/
+
+public/models/old-trafford.glb
+
+# environments
+.env
+.env.*
+!.env.example
+
+# editor & os
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+
+.cache/
+coverage/
+*.log
+npm-debug.log*
+
+
+There's a collection called "Base" and I don't want anything from it to be visible. Other than that, I think the model is cool. Make the scrolling a bit smoother. It's also called "Sir Bobby Charlton Stand", not the South stand. I'd like t
