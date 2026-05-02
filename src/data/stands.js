@@ -1,54 +1,57 @@
-export const stands = [
+// 10 camera waypoints orbiting Old Trafford at different heights and angles.
+// positions/lookAt are tuned for the compressed Lego GLB (model center ~[0.04, 0.1, 0.1]).
+export const stops = [
+  // 0 — wide aerial overview, corner approach
+  {
+    id: 'overview',
+    camera: { position: [0.55, 0.42, 0.55], lookAt: [0.04, 0.08, 0.1] },
+  },
+  // 1 — East Stand, mid-height side-on
   {
     id: 'east-stand',
-    name: 'East Stand',
-    subtitle: 'The Executive Quarter',
-    year: '1965',
-    capacity: '11,500',
-    description:
-      'Home to the executive suites and the Manchester United Museum & Tour Centre. Originally built in 1965, it was extensively redeveloped in the 1990s. The stand houses the club\'s corporate hospitality facilities and offers panoramic views across the Theatre of Dreams.',
-    camera: {
-      position: [0.6, 0.3, 0.15],
-      lookAt: [0.04, 0.05, 0.1],
-    },
+    camera: { position: [0.62, 0.28, 0.12], lookAt: [0.04, 0.06, 0.1] },
   },
+  // 2 — East Stand, low dramatic angle
+  {
+    id: 'east-low',
+    camera: { position: [0.55, 0.14, 0.22], lookAt: [0.04, 0.12, 0.1] },
+  },
+  // 3 — Stretford End, front-on
   {
     id: 'stretford-end',
-    name: 'Stretford End',
-    subtitle: 'Where Legends are Made',
-    year: '1992',
-    capacity: '16,000',
-    description:
-      'The most famous terrace in English football. Named after the nearby town of Stretford, this is where United\'s most passionate supporters gather. The wall of noise from the Stretford End has been the twelfth man for decades. Converted to all-seater in 1993, it remains the beating heart of matchday atmosphere.',
-    camera: {
-      position: [0.15, 0.3, -0.5],
-      lookAt: [0.04, 0.05, 0.1],
-    },
+    camera: { position: [0.12, 0.28, -0.52], lookAt: [0.04, 0.06, 0.1] },
   },
+  // 4 — Stretford End, high corner
   {
-    id: 'sir-alex-stand',
-    name: 'Sir Alex Ferguson Stand',
-    subtitle: 'A Legacy Carved in Stone',
-    year: '1996',
-    capacity: '25,500',
-    description:
-      'Renamed in November 2011 to honour Sir Alex Ferguson — the greatest manager in football history. Originally the North Stand, it is the largest single-tier stand in the Premier League. A bronze statue of Sir Alex stands outside, arms folded, watching over his empire.',
-    camera: {
-      position: [-0.5, 0.3, 0.15],
-      lookAt: [0.04, 0.05, 0.1],
-    },
+    id: 'stretford-high',
+    camera: { position: [-0.1, 0.44, -0.48], lookAt: [0.04, 0.08, 0.1] },
   },
+  // 5 — Sir Alex Ferguson Stand, opposite side
   {
-    id: 'south-stand',
-    name: 'South Stand',
-    subtitle: 'The Munich Legacy',
-    year: '2006',
-    capacity: '12,000',
-    description:
-      'The South Stand is home to the Munich Clock, forever marking the time of the 1958 disaster. Outside stands the Holy Trinity statue of Best, Law, and Charlton. This stand connects Old Trafford\'s glorious past to its ambitious future.',
-    camera: {
-      position: [0.15, 0.3, 0.6],
-      lookAt: [0.04, 0.05, 0.1],
-    },
+    id: 'saf-stand',
+    camera: { position: [-0.52, 0.28, 0.12], lookAt: [0.04, 0.06, 0.1] },
+  },
+  // 6 — Sir Alex Ferguson Stand, high sweep
+  {
+    id: 'saf-high',
+    camera: { position: [-0.44, 0.44, -0.18], lookAt: [0.04, 0.1, 0.1] },
+  },
+  // 7 — Sir Bobby Charlton Stand, front
+  {
+    id: 'bobby-stand',
+    camera: { position: [0.12, 0.28, 0.62], lookAt: [0.04, 0.06, 0.1] },
+  },
+  // 8 — Low pitch-level, dramatic
+  {
+    id: 'pitch-level',
+    camera: { position: [0.3, 0.06, 0.38], lookAt: [0.04, 0.14, 0.0] },
+  },
+  // 9 — Pure top-down, aerial outro
+  {
+    id: 'aerial',
+    camera: { position: [0.04, 0.65, 0.1], lookAt: [0.04, 0.06, 0.1] },
   },
 ]
+
+// Legacy export so ScrollIndicator still works
+export const stands = stops

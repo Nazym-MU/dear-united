@@ -1,21 +1,20 @@
-import { stands } from '../data/stands'
+import { stops } from '../data/stands'
 
 export default function ScrollIndicator({ activeStand }) {
   const handleClick = (i) => {
-    const heroHeight = window.innerHeight
-    const sectionHeight = window.innerHeight * 2
-    const target = heroHeight + i * sectionHeight + sectionHeight * 0.3
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+    const target = (i / (stops.length - 1)) * maxScroll
     window.scrollTo({ top: target, behavior: 'smooth' })
   }
 
   return (
     <nav className="scroll-indicator">
-      {stands.map((stand, i) => (
+      {stops.map((stop, i) => (
         <button
-          key={stand.id}
+          key={stop.id}
           className={`scroll-dot ${i === activeStand ? 'active' : ''}`}
           onClick={() => handleClick(i)}
-          aria-label={stand.name}
+          aria-label={stop.id}
         />
       ))}
     </nav>
