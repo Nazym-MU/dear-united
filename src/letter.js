@@ -5,7 +5,6 @@ const scrollEl   = document.getElementById('letter-scroll')
 const stageEl    = document.getElementById('letter-stage')
 const sheetEl    = document.getElementById('letter-sheet')
 const envelopeEl = document.getElementById('envelope')
-const linksEl    = document.getElementById('letter-links')
 
 function el(tag, className, text) {
   const n = document.createElement(tag)
@@ -23,13 +22,6 @@ const bodyEl = document.getElementById('sheet-body')
 for (const para of letter.paragraphs) bodyEl.appendChild(el('p', 'sheet-para', para))
 document.getElementById('sheet-signoff').textContent = letter.signoff
 document.getElementById('sheet-signature').textContent = letter.signature
-
-for (const link of letter.links) {
-  const a = el('a', 'letter-link')
-  a.href = link.href
-  a.appendChild(el('span', 'letter-link-label', link.label))
-  linksEl.appendChild(a)
-}
 
 const PHASES = {
   flap: [0.06, 0.44],
@@ -103,11 +95,6 @@ function render() {
   )
   const wrapTop = closedTop + (openTop - closedTop) * ease(clamp01(p / 0.55))
   stageEl.style.setProperty('--wrap-offset', `${Math.round(wrapTop)}px`)
-
-  const linkFade = ease(clamp01((p - 0.86) / 0.14))
-  linksEl.style.opacity = linkFade.toFixed(3)
-  linksEl.style.transform = `translateY(${((1 - linkFade) * 20).toFixed(1)}px)`
-  linksEl.style.pointerEvents = linkFade > 0.6 ? 'auto' : 'none'
 }
 
 function onScroll() {
@@ -125,8 +112,6 @@ if (prefersReduced) {
   document.body.classList.add('reduced-motion')
   scrollEl.style.height = 'auto'
   stageEl.style.position = 'relative'
-  linksEl.style.opacity = 1
-  linksEl.style.pointerEvents = 'auto'
 } else {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
   window.scrollTo(0, 0)

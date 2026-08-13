@@ -11,11 +11,4 @@ export const letter = {
   ],
   signoff: 'Yours,',
   signature: 'A supporter',
-
-  links: [
-    { label: 'Stadium Tour', href: '/stadium.html' },
-    { label: 'History', href: '#history' },
-    { label: 'Season 2026/27', href: '/season.html' },
-    { label: 'Player Album', href: '/album.html' },
-  ],
 }

@@ -40,7 +40,7 @@ function expDecay(cur, target, decay, dt) {
 const smoothstep = (t) => t * t * (3 - 2 * t)
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
 
-export function initStadium(canvasEl, { onProgress, onAssemblyDone }) {
+export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = true }) {
   const renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: false, powerPreference: 'high-performance' })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -78,7 +78,49 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone }) {
   let assemblyDone  = false
   let assemblyClock = -0.7 // scaled elapsed time; starts negative for a beat after the loader fades
   let timeScale     = 1
+  let started       = autoStart   // embed mode holds the drop until the section scrolls into view
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // Free-orbit mode (embed): drag rotates the ground itself, no scroll path.
+  let orbit = null         // { theta, pitch, radius, lookY, velTheta, velPitch, dragging }
+
+  function enableOrbit() {
+    if (orbit) return
+    const dx = camPos.x - CENTER.x
+    const dz = camPos.z - CENTER.z
+    orbit = {
+      theta: Math.atan2(dz, dx),
+      pitch: Math.atan2(camPos.y - CENTER.y, Math.hypot(dx, dz)),
+      radius: Math.hypot(dx, dz),
+      velTheta: 0,
+      velPitch: 0,
+      dragging: false,
+    }
+    let lastX = 0, lastY = 0, lastT = 0
+    canvasEl.addEventListener('pointerdown', (e) => {
+      orbit.dragging = true
+      orbit.velTheta = 0
+      orbit.velPitch = 0
+      lastX = e.clientX; lastY = e.clientY; lastT = performance.now()
+      canvasEl.setPointerCapture(e.pointerId)
+      canvasEl.classList.add('dragging')
+    })
+    canvasEl.addEventListener('pointermove', (e) => {
+      if (!orbit.dragging) return
+      const dxp = e.clientX - lastX
+      const dyp = e.clientY - lastY
+      const now = performance.now()
+      const dtp = Math.max(1, now - lastT)
+      lastX = e.clientX; lastY = e.clientY; lastT = now
+      orbit.theta += dxp * 0.006
+      orbit.pitch = Math.max(0.06, Math.min(1.25, orbit.pitch + dyp * 0.004))
+      orbit.velTheta = (dxp * 0.006) / dtp * 1000
+      orbit.velPitch = (dyp * 0.004) / dtp * 1000
+    })
+    const endDrag = () => { if (orbit) { orbit.dragging = false; canvasEl.classList.remove('dragging') } }
+    canvasEl.addEventListener('pointerup', endDrag)
+    canvasEl.addEventListener('pointercancel', endDrag)
+  }
 
   const camPos  = new THREE.Vector3(0.55, 0.42, 0.55)
   const camLook = CENTER.clone()
@@ -188,12 +230,14 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone }) {
     if (meshData.length === 0) { renderer.render(scene, camera); return }
 
     // ── Assembly clock ────────────────────────────────────────────────────
-    if (assemblyStart === null) assemblyStart = now
-    if (!assemblyDone) {
-      assemblyClock += dt * (reducedMotion ? 50 : timeScale)
-      if (assemblyClock >= ASSEMBLY_SPREAD + DROP_DURATION + 0.4) {
-        assemblyDone = true
-        onAssemblyDone()
+    if (started) {
+      if (assemblyStart === null) assemblyStart = now
+      if (!assemblyDone) {
+        assemblyClock += dt * (reducedMotion ? 50 : timeScale)
+        if (assemblyClock >= ASSEMBLY_SPREAD + DROP_DURATION + 0.4) {
+          assemblyDone = true
+          onAssemblyDone()
+        }
       }
     }
 
@@ -202,7 +246,23 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone }) {
     smoothYaw   = expDecay(smoothYaw, userYawOffset + exploreYaw, 0.05, dt)
 
     let shift = 0
-    if (path) {
+    if (orbit && assemblyDone) {
+      // Inertia after release
+      if (!orbit.dragging) {
+        orbit.theta += orbit.velTheta * dt
+        orbit.pitch = Math.max(0.06, Math.min(1.25, orbit.pitch + orbit.velPitch * dt))
+        const decay = Math.pow(0.05, dt)
+        orbit.velTheta *= decay
+        orbit.velPitch *= decay
+      }
+      const r = orbit.radius
+      _tPos.set(
+        CENTER.x + r * Math.cos(orbit.pitch) * Math.cos(orbit.theta),
+        CENTER.y + r * Math.sin(orbit.pitch),
+        CENTER.z + r * Math.cos(orbit.pitch) * Math.sin(orbit.theta),
+      )
+      _tLook.copy(CENTER)
+    } else if (path) {
       if (!assemblyDone) {
         // Slow settle from wide to the hero framing while pieces fall.
         const t = Math.min(1, assemblyClock / (ASSEMBLY_SPREAD + DROP_DURATION))
@@ -268,6 +328,8 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone }) {
   })
 
   return {
+    start:          () => { started = true },
+    enableOrbit,
     setPath,
     setScrollU:     (u) => { scrollU = u },
     jumpScrollU:    (u) => { scrollU = u; smoothU = u },
