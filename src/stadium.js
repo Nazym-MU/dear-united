@@ -79,10 +79,14 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
   let assemblyClock = -0.7 // scaled elapsed time; starts negative for a beat after the loader fades
   let timeScale     = 1
   let started       = autoStart   // embed mode holds the drop until the section scrolls into view
+  let active        = true        // false = section off-screen, skip rendering entirely
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   // Free-orbit mode (embed): drag rotates the ground itself, no scroll path.
   let orbit = null         // { theta, pitch, radius, lookY, velTheta, velPitch, dragging }
+
+  const R_MIN = 0.3
+  const R_MAX = 1.35
 
   function enableOrbit() {
     if (orbit) return
@@ -91,21 +95,44 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
     orbit = {
       theta: Math.atan2(dz, dx),
       pitch: Math.atan2(camPos.y - CENTER.y, Math.hypot(dx, dz)),
-      radius: Math.hypot(dx, dz),
+      radius: Math.hypot(camPos.x - CENTER.x, camPos.y - CENTER.y, camPos.z - CENTER.z),
       velTheta: 0,
       velPitch: 0,
       dragging: false,
     }
+    const clampR = (r) => Math.max(R_MIN, Math.min(R_MAX, r))
+    const pointers = new Map()
+    let pinchDist = 0
+    let pinchRadius = 0
     let lastX = 0, lastY = 0, lastT = 0
+
+    const dist = () => {
+      const [a, b] = [...pointers.values()]
+      return Math.hypot(a.x - b.x, a.y - b.y)
+    }
+
     canvasEl.addEventListener('pointerdown', (e) => {
-      orbit.dragging = true
-      orbit.velTheta = 0
-      orbit.velPitch = 0
-      lastX = e.clientX; lastY = e.clientY; lastT = performance.now()
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
       canvasEl.setPointerCapture(e.pointerId)
-      canvasEl.classList.add('dragging')
+      if (pointers.size === 1) {
+        orbit.dragging = true
+        orbit.velTheta = 0
+        orbit.velPitch = 0
+        lastX = e.clientX; lastY = e.clientY; lastT = performance.now()
+        canvasEl.classList.add('dragging')
+      } else if (pointers.size === 2) {
+        orbit.dragging = false          // two fingers = pinch zoom, not rotate
+        pinchDist = dist()
+        pinchRadius = orbit.radius
+      }
     })
     canvasEl.addEventListener('pointermove', (e) => {
+      if (!pointers.has(e.pointerId)) return
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      if (pointers.size === 2 && pinchDist > 0) {
+        orbit.radius = clampR(pinchRadius * (pinchDist / Math.max(20, dist())))
+        return
+      }
       if (!orbit.dragging) return
       const dxp = e.clientX - lastX
       const dyp = e.clientY - lastY
@@ -117,9 +144,21 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
       orbit.velTheta = (dxp * 0.006) / dtp * 1000
       orbit.velPitch = (dyp * 0.004) / dtp * 1000
     })
-    const endDrag = () => { if (orbit) { orbit.dragging = false; canvasEl.classList.remove('dragging') } }
+    const endDrag = (e) => {
+      pointers.delete(e.pointerId)
+      if (pointers.size < 2) pinchDist = 0
+      if (pointers.size === 0 && orbit) { orbit.dragging = false; canvasEl.classList.remove('dragging') }
+    }
     canvasEl.addEventListener('pointerup', endDrag)
     canvasEl.addEventListener('pointercancel', endDrag)
+
+    // Trackpad pinch arrives as ctrl+wheel (and cmd/ctrl+scroll wheel works
+    // too); plain wheel is left alone so the page still scrolls.
+    canvasEl.addEventListener('wheel', (e) => {
+      if (!e.ctrlKey && !e.metaKey) return
+      e.preventDefault()
+      orbit.radius = clampR(orbit.radius * (1 + e.deltaY * 0.01))
+    }, { passive: false })
   }
 
   const camPos  = new THREE.Vector3(0.55, 0.42, 0.55)
@@ -227,6 +266,7 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
     const dt  = Math.min(now - prevTime, 0.1)
     prevTime  = now
 
+    if (!active) return   // section is off-screen; skip all work
     if (meshData.length === 0) { renderer.render(scene, camera); return }
 
     // ── Assembly clock ────────────────────────────────────────────────────
@@ -329,6 +369,7 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
 
   return {
     start:          () => { started = true },
+    setActive:      (v) => { active = v },
     enableOrbit,
     setPath,
     setScrollU:     (u) => { scrollU = u },
