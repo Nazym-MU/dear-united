@@ -108,16 +108,46 @@ function onResize() {
   render()
 }
 
+// The envelope is measured with fallback fonts first and again once the real
+// faces arrive, so the page stays behind the boot loader until layout is
+// final — no flash of the unscaled envelope.
+const bootEl = document.getElementById('boot')
+const shownAt = performance.now()
+let revealed = false
+
+function reveal() {
+  if (revealed) return
+  revealed = true
+  const wait = Math.max(0, 600 - (performance.now() - shownAt))
+  setTimeout(() => {
+    onResize()
+    document.body.classList.add('ready')
+    bootEl.classList.add('hide')
+    setTimeout(() => bootEl.remove(), 700)
+  }, wait)
+}
+
 if (prefersReduced) {
   document.body.classList.add('reduced-motion')
   scrollEl.style.height = 'auto'
   stageEl.style.position = 'relative'
+  reveal()
 } else {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
   window.scrollTo(0, 0)
   sizeSheet()
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onResize)
-  if (document.fonts?.ready) document.fonts.ready.then(onResize)
   render()
+  if (document.fonts?.load) {
+    // fonts.ready resolves before any face is requested — ask for the two
+    // faces the envelope actually uses so the promise tracks their arrival.
+    Promise.all([
+      document.fonts.load('1rem "Homemade Apple"'),
+      document.fonts.load('700 1rem "Nunito"'),
+    ]).then(reveal, reveal)
+    setTimeout(reveal, 2500) // fallback if a font hangs
+  } else {
+    reveal()
+  }
 }
