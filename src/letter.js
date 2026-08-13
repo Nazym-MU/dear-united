@@ -120,10 +120,15 @@ function reveal() {
   revealed = true
   const wait = Math.max(0, 600 - (performance.now() - shownAt))
   setTimeout(() => {
+    // Measure, then measure again a frame later — the second pass catches
+    // any late font swap or reflow — and only then show the page.
     onResize()
-    document.body.classList.add('ready')
-    bootEl.classList.add('hide')
-    setTimeout(() => bootEl.remove(), 700)
+    requestAnimationFrame(() => {
+      onResize()
+      document.body.classList.add('ready')
+      bootEl.classList.add('hide')
+      setTimeout(() => bootEl.remove(), 700)
+    })
   }, wait)
 }
 
@@ -139,15 +144,19 @@ if (prefersReduced) {
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onResize)
   render()
-  if (document.fonts?.load) {
-    // fonts.ready resolves before any face is requested — ask for the two
-    // faces the envelope actually uses so the promise tracks their arrival.
-    Promise.all([
-      document.fonts.load('1rem "Homemade Apple"'),
-      document.fonts.load('700 1rem "Nunito"'),
-    ]).then(reveal, reveal)
-    setTimeout(reveal, 2500) // fallback if a font hangs
-  } else {
-    reveal()
-  }
+  // fonts.load()/fonts.ready lie if the Google Fonts stylesheet hasn't been
+  // applied yet, so first wait for window load (all stylesheets parsed),
+  // then for the faces themselves; 3s cap so a hung font can't strand us.
+  const winLoad = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise((r) => window.addEventListener('load', r, { once: true }))
+  const fontsReady = winLoad.then(() => Promise.all([
+    document.fonts?.load?.('1rem "Homemade Apple"'),
+    document.fonts?.load?.('700 1rem "Nunito"'),
+    document.fonts?.ready,
+  ]))
+  Promise.race([
+    fontsReady,
+    new Promise((r) => setTimeout(r, 3000)),
+  ]).then(reveal, reveal)
 }

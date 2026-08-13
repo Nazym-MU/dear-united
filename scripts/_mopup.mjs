@@ -10,6 +10,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const people = new Map()
 for (const s of seasons) {
   for (const p of s.players) people.set(p.slug, p.name)
+  for (const p of s.squad ?? []) people.set(p.slug, p.name)
   if (s.manager) people.set(s.manager.slug, s.manager.name)
 }
 

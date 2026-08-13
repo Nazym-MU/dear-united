@@ -55,9 +55,6 @@ function managerCard(m) {
   return `
     <article class="pcard manager-card">
       <span class="manager-tag">Manager</span>
-      <div class="pcard-top">
-        <span class="pcard-pos">The Boss</span>
-      </div>
       <div class="pcard-photo">
         <div class="monogram">${initials(m.name)}</div>
         <img src="/photos/players/${m.slug}.jpg" alt="${m.name}" loading="lazy" />
@@ -82,8 +79,38 @@ function jerseySvg(kit) {
     </svg>`
 }
 
+function chipName(name) {
+  const parts = name.trim().split(/\s+/)
+  if (parts.length === 1) return parts[0]
+  let i = parts.length - 1
+  while (i - 1 > 0 && /^[a-z]/.test(parts[i - 1])) i--
+  return parts.slice(i).join(' ')
+}
+
+function squadChip(p) {
+  return `
+    <div class="squad-chip" title="${p.name}">
+      <span class="squad-chip-photo">
+        <span class="monogram">${initials(p.name)}</span>
+        <img src="/photos/players/${p.slug}.jpg" alt="${p.name}" loading="lazy" />
+      </span>
+      <span class="squad-chip-meta">
+        <span class="squad-chip-name">${chipName(p.name)}</span>
+        <span class="squad-chip-pos">${p.pos}</span>
+      </span>
+    </div>`
+}
+
 function leftPage(season) {
   const kitCaption = ['Home kit', season.kit.maker, season.kit.sponsor].filter(Boolean).join(' · ')
+  const squad = season.squad || []
+  const squadHtml = squad.length
+    ? `
+      <div class="squad-strip">
+        <span class="squad-label">Also in the squad</span>
+        <div class="squad-grid">${squad.map(squadChip).join('')}</div>
+      </div>`
+    : ''
   return `
     <div class="season-left">
       <p class="season-eyebrow">Manchester United</p>
@@ -96,6 +123,7 @@ function leftPage(season) {
         </div>
         <p class="kit-caption">${kitCaption}</p>
       </div>
+      ${squadHtml}
     </div>`
 }
 
@@ -212,6 +240,8 @@ document.addEventListener(
     if (!(img instanceof HTMLImageElement)) return
     const card = img.closest('.pcard')
     if (card) card.classList.add('no-photo')
+    const chip = img.closest('.squad-chip')
+    if (chip) chip.classList.add('no-photo')
     const kit = img.closest('.kit-media')
     if (kit) kit.classList.add('no-photo')
   },

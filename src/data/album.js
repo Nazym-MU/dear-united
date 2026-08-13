@@ -17,6 +17,13 @@ export const seasons = [
       { number: 9, name: 'Tommy Taylor', slug: 'tommy-taylor', position: 'CF' },
       { number: 10, name: 'Jack Rowley', slug: 'jack-rowley', position: 'IL' },
       { number: 11, name: 'David Pegg', slug: 'david-pegg', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'jack-crompton', name: 'Jack Crompton', pos: 'GK' },
+      { slug: 'stan-pearson', name: 'Stan Pearson', pos: 'IL' },
+      { slug: 'henry-cockburn', name: 'Henry Cockburn', pos: 'LH' },
+      { slug: 'jackie-blanchflower', name: 'Jackie Blanchflower', pos: 'IR' },
+      { slug: 'eddie-lewis', name: 'Eddie Lewis', pos: 'CF' }
     ]
   },
   {
@@ -37,6 +44,13 @@ export const seasons = [
       { number: 9, name: 'Tommy Taylor', slug: 'tommy-taylor', position: 'CF' },
       { number: 10, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'IL' },
       { number: 11, name: 'David Pegg', slug: 'david-pegg', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'jack-rowley', name: 'Jack Rowley', pos: 'OL' },
+      { slug: 'mark-jones', name: 'Mark Jones', pos: 'CH' },
+      { slug: 'billy-whelan', name: 'Billy Whelan', pos: 'IR' },
+      { slug: 'colin-webster', name: 'Colin Webster', pos: 'CF' },
+      { slug: 'freddie-goodwin', name: 'Freddie Goodwin', pos: 'RH' }
     ]
   },
   {
@@ -57,6 +71,13 @@ export const seasons = [
       { number: 9, name: 'Tommy Taylor', slug: 'tommy-taylor', position: 'CF' },
       { number: 10, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'IL' },
       { number: 11, name: 'David Pegg', slug: 'david-pegg', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'jeff-whitefoot', name: 'Jeff Whitefoot', pos: 'RH' },
+      { slug: 'jackie-blanchflower', name: 'Jackie Blanchflower', pos: 'CH' },
+      { slug: 'billy-whelan', name: 'Billy Whelan', pos: 'IR' },
+      { slug: 'ian-greaves', name: 'Ian Greaves', pos: 'RB' },
+      { slug: 'colin-webster', name: 'Colin Webster', pos: 'CF' }
     ]
   },
   {
@@ -77,6 +98,13 @@ export const seasons = [
       { number: 9, name: 'Tommy Taylor', slug: 'tommy-taylor', position: 'CF' },
       { number: 10, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'IL' },
       { number: 11, name: 'David Pegg', slug: 'david-pegg', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'bobby-charlton', name: 'Bobby Charlton', pos: 'IL' },
+      { slug: 'jackie-blanchflower', name: 'Jackie Blanchflower', pos: 'CH' },
+      { slug: 'wilf-mcguinness', name: 'Wilf McGuinness', pos: 'LH' },
+      { slug: 'geoff-bent', name: 'Geoff Bent', pos: 'LB' },
+      { slug: 'colin-webster', name: 'Colin Webster', pos: 'CF' }
     ]
   },
   {
@@ -97,6 +125,14 @@ export const seasons = [
       { number: 9, name: 'Tommy Taylor', slug: 'tommy-taylor', position: 'CF' },
       { number: 10, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'IL' },
       { number: 11, name: 'Albert Scanlon', slug: 'albert-scanlon', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'billy-whelan', name: 'Billy Whelan', pos: 'IR' },
+      { slug: 'david-pegg', name: 'David Pegg', pos: 'OL' },
+      { slug: 'johnny-berry', name: 'Johnny Berry', pos: 'OR' },
+      { slug: 'ray-wood', name: 'Ray Wood', pos: 'GK' },
+      { slug: 'ernie-taylor', name: 'Ernie Taylor', pos: 'IR' },
+      { slug: 'stan-crowther', name: 'Stan Crowther', pos: 'LH' }
     ]
   },
   {
@@ -117,6 +153,13 @@ export const seasons = [
       { number: 9, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'CF' },
       { number: 10, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'IL' },
       { number: 11, name: 'Albert Scanlon', slug: 'albert-scanlon', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'alex-dawson', name: 'Alex Dawson', pos: 'CF' },
+      { slug: 'shay-brennan', name: 'Shay Brennan', pos: 'OL' },
+      { slug: 'kenny-morgans', name: 'Kenny Morgans', pos: 'OR' },
+      { slug: 'ray-wood', name: 'Ray Wood', pos: 'GK' },
+      { slug: 'ernie-taylor', name: 'Ernie Taylor', pos: 'IR' }
     ]
   },
   {
@@ -137,6 +180,12 @@ export const seasons = [
       { number: 9, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'CF' },
       { number: 10, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'IL' },
       { number: 11, name: 'Albert Scanlon', slug: 'albert-scanlon', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'alex-dawson', name: 'Alex Dawson', pos: 'CF' },
+      { slug: 'johnny-giles', name: 'Johnny Giles', pos: 'OR' },
+      { slug: 'shay-brennan', name: 'Shay Brennan', pos: 'RB' },
+      { slug: 'freddie-goodwin', name: 'Freddie Goodwin', pos: 'RH' }
     ]
   },
   {
@@ -157,6 +206,13 @@ export const seasons = [
       { number: 9, name: 'Alex Dawson', slug: 'alex-dawson', position: 'CF' },
       { number: 10, name: 'Dennis Viollet', slug: 'dennis-viollet', position: 'IL' },
       { number: 11, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'tony-dunne', name: 'Tony Dunne', pos: 'LB' },
+      { slug: 'david-gaskell', name: 'David Gaskell', pos: 'GK' },
+      { slug: 'ronnie-cope', name: 'Ronnie Cope', pos: 'CH' },
+      { slug: 'mark-pearson', name: 'Mark Pearson', pos: 'IL' },
+      { slug: 'warren-bradley', name: 'Warren Bradley', pos: 'OR' }
     ]
   },
   {
@@ -177,6 +233,12 @@ export const seasons = [
       { number: 9, name: 'David Herd', slug: 'david-herd', position: 'CF' },
       { number: 10, name: 'Nobby Lawton', slug: 'nobby-lawton', position: 'IL' },
       { number: 11, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'noel-cantwell', name: 'Noel Cantwell', pos: 'LB' },
+      { slug: 'dennis-viollet', name: 'Dennis Viollet', pos: 'IL' },
+      { slug: 'david-gaskell', name: 'David Gaskell', pos: 'GK' },
+      { slug: 'phil-chisnall', name: 'Phil Chisnall', pos: 'IR' }
     ]
   },
   {
@@ -197,6 +259,12 @@ export const seasons = [
       { number: 9, name: 'David Herd', slug: 'david-herd', position: 'CF' },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL' },
       { number: 11, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'harry-gregg', name: 'Harry Gregg', pos: 'GK' },
+      { slug: 'shay-brennan', name: 'Shay Brennan', pos: 'RB' },
+      { slug: 'nobby-stiles', name: 'Nobby Stiles', pos: 'RH' },
+      { slug: 'nobby-lawton', name: 'Nobby Lawton', pos: 'IL' }
     ]
   },
   {
@@ -217,6 +285,13 @@ export const seasons = [
       { number: 9, name: 'David Herd', slug: 'david-herd', position: 'CF' },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL', captain: true },
       { number: 11, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'harry-gregg', name: 'Harry Gregg', pos: 'GK' },
+      { slug: 'noel-cantwell', name: 'Noel Cantwell', pos: 'LB' },
+      { slug: 'nobby-stiles', name: 'Nobby Stiles', pos: 'RH' },
+      { slug: 'david-sadler', name: 'David Sadler', pos: 'CF' },
+      { slug: 'willie-anderson', name: 'Willie Anderson', pos: 'OL' }
     ]
   },
   {
@@ -237,6 +312,13 @@ export const seasons = [
       { number: 9, name: 'David Herd', slug: 'david-herd', position: 'CF' },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL', captain: true },
       { number: 11, name: 'George Best', slug: 'george-best', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'david-gaskell', name: 'David Gaskell', pos: 'GK' },
+      { slug: 'noel-cantwell', name: 'Noel Cantwell', pos: 'LB' },
+      { slug: 'david-sadler', name: 'David Sadler', pos: 'CF' },
+      { slug: 'willie-anderson', name: 'Willie Anderson', pos: 'OL' },
+      { slug: 'john-fitzpatrick', name: 'John Fitzpatrick', pos: 'RH' }
     ]
   },
   {
@@ -257,6 +339,13 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF' },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL', captain: true },
       { number: 11, name: 'George Best', slug: 'george-best', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'david-sadler', name: 'David Sadler', pos: 'CF' },
+      { slug: 'john-aston', name: 'John Aston', pos: 'OL' },
+      { slug: 'pat-dunne', name: 'Pat Dunne', pos: 'GK' },
+      { slug: 'noel-cantwell', name: 'Noel Cantwell', pos: 'LB' },
+      { slug: 'john-fitzpatrick', name: 'John Fitzpatrick', pos: 'RH' }
     ]
   },
   {
@@ -277,6 +366,13 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF' },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL', captain: true },
       { number: 11, name: 'John Aston', slug: 'john-aston', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'david-sadler', name: 'David Sadler', pos: 'CH' },
+      { slug: 'bobby-noble', name: 'Bobby Noble', pos: 'LB' },
+      { slug: 'john-fitzpatrick', name: 'John Fitzpatrick', pos: 'RH' },
+      { slug: 'jimmy-ryan', name: 'Jimmy Ryan', pos: 'OR' },
+      { slug: 'david-gaskell', name: 'David Gaskell', pos: 'GK' }
     ]
   },
   {
@@ -297,6 +393,13 @@ export const seasons = [
       { number: 7, name: 'George Best', slug: 'george-best', position: 'RW' },
       { number: 8, name: 'Brian Kidd', slug: 'brian-kidd', position: 'ST' },
       { number: 11, name: 'John Aston', slug: 'john-aston', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'denis-law', name: 'Denis Law', pos: 'IL' },
+      { slug: 'david-herd', name: 'David Herd', pos: 'CF' },
+      { slug: 'francis-burns', name: 'Francis Burns', pos: 'LB' },
+      { slug: 'john-fitzpatrick', name: 'John Fitzpatrick', pos: 'RH' },
+      { slug: 'jimmy-ryan', name: 'Jimmy Ryan', pos: 'OR' }
     ]
   },
   {
@@ -317,6 +420,13 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF', captain: true },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL' },
       { number: 11, name: 'George Best', slug: 'george-best', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'bill-foulkes', name: 'Bill Foulkes', pos: 'CH' },
+      { slug: 'francis-burns', name: 'Francis Burns', pos: 'LB' },
+      { slug: 'john-fitzpatrick', name: 'John Fitzpatrick', pos: 'RH' },
+      { slug: 'jimmy-rimmer', name: 'Jimmy Rimmer', pos: 'GK' },
+      { slug: 'carlo-sartori', name: 'Carlo Sartori', pos: 'IR' }
     ]
   },
   {
@@ -337,6 +447,13 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF', captain: true },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL' },
       { number: 11, name: 'George Best', slug: 'george-best', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'nobby-stiles', name: 'Nobby Stiles', pos: 'LH' },
+      { slug: 'shay-brennan', name: 'Shay Brennan', pos: 'RB' },
+      { slug: 'francis-burns', name: 'Francis Burns', pos: 'LB' },
+      { slug: 'carlo-sartori', name: 'Carlo Sartori', pos: 'IR' },
+      { slug: 'jimmy-rimmer', name: 'Jimmy Rimmer', pos: 'GK' }
     ]
   },
   {
@@ -357,6 +474,12 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF', captain: true },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL' },
       { number: 11, name: 'George Best', slug: 'george-best', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'nobby-stiles', name: 'Nobby Stiles', pos: 'LH' },
+      { slug: 'jimmy-rimmer', name: 'Jimmy Rimmer', pos: 'GK' },
+      { slug: 'alan-gowling', name: 'Alan Gowling', pos: 'IR' },
+      { slug: 'francis-burns', name: 'Francis Burns', pos: 'LB' }
     ]
   },
   {
@@ -377,6 +500,13 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF', captain: true },
       { number: 10, name: 'Denis Law', slug: 'denis-law', position: 'IL' },
       { number: 11, name: 'George Best', slug: 'george-best', position: 'OL' }
+    ],
+    squad: [
+      { slug: 'sammy-mcilroy', name: 'Sammy McIlroy', pos: 'FW' },
+      { slug: 'martin-buchan', name: 'Martin Buchan', pos: 'CB' },
+      { slug: 'ian-storey-moore', name: 'Ian Storey-Moore', pos: 'LW' },
+      { slug: 'francis-burns', name: 'Francis Burns', pos: 'LB' },
+      { slug: 'john-fitzpatrick', name: 'John Fitzpatrick', pos: 'RB' }
     ]
   },
   {
@@ -397,6 +527,13 @@ export const seasons = [
       { number: 9, name: 'Bobby Charlton', slug: 'bobby-charlton', position: 'CF', captain: true },
       { number: 10, name: 'Lou Macari', slug: 'lou-macari', position: 'FW' },
       { number: 11, name: 'Ian Storey-Moore', slug: 'ian-storey-moore', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'george-best', name: 'George Best', pos: 'OL' },
+      { slug: 'denis-law', name: 'Denis Law', pos: 'IL' },
+      { slug: 'sammy-mcilroy', name: 'Sammy McIlroy', pos: 'FW' },
+      { slug: 'ted-macdougall', name: 'Ted MacDougall', pos: 'CF' },
+      { slug: 'wyn-davies', name: 'Wyn Davies', pos: 'CF' }
     ]
   },
   {
@@ -417,6 +554,12 @@ export const seasons = [
       { number: 8, name: 'Sammy McIlroy', slug: 'sammy-mcilroy', position: 'CAM' },
       { number: 9, name: 'Brian Kidd', slug: 'brian-kidd', position: 'CF' },
       { number: 10, name: 'Lou Macari', slug: 'lou-macari', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'george-best', name: 'George Best', pos: 'RW' },
+      { slug: 'jim-mccalliog', name: 'Jim McCalliog', pos: 'CM' },
+      { slug: 'mick-martin', name: 'Mick Martin', pos: 'CM' },
+      { slug: 'tony-young', name: 'Tony Young', pos: 'RB' }
     ]
   },
   {
@@ -437,6 +580,12 @@ export const seasons = [
       { number: 11, name: 'Lou Macari', slug: 'lou-macari', position: 'CAM' },
       { number: 9, name: 'Stuart Pearson', slug: 'stuart-pearson', position: 'CF' },
       { number: 10, name: 'Sammy McIlroy', slug: 'sammy-mcilroy', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'steve-coppell', name: 'Steve Coppell', pos: 'RW' },
+      { slug: 'brian-greenhoff', name: 'Brian Greenhoff', pos: 'CB' },
+      { slug: 'steve-james', name: 'Steve James', pos: 'CB' },
+      { slug: 'paddy-roche', name: 'Paddy Roche', pos: 'GK' }
     ]
   },
   {
@@ -457,6 +606,12 @@ export const seasons = [
       { number: 10, name: 'Sammy McIlroy', slug: 'sammy-mcilroy', position: 'CAM' },
       { number: 9, name: 'Stuart Pearson', slug: 'stuart-pearson', position: 'CF' },
       { number: 11, name: 'Gordon Hill', slug: 'gordon-hill', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'david-mccreery', name: 'David McCreery', pos: 'CM' },
+      { slug: 'jimmy-nicholl', name: 'Jimmy Nicholl', pos: 'RB' },
+      { slug: 'tommy-jackson', name: 'Tommy Jackson', pos: 'CM' },
+      { slug: 'paddy-roche', name: 'Paddy Roche', pos: 'GK' }
     ]
   },
   {
@@ -477,6 +632,12 @@ export const seasons = [
       { number: 8, name: 'Jimmy Greenhoff', slug: 'jimmy-greenhoff', position: 'FW' },
       { number: 9, name: 'Stuart Pearson', slug: 'stuart-pearson', position: 'CF' },
       { number: 11, name: 'Gordon Hill', slug: 'gordon-hill', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'david-mccreery', name: 'David McCreery', pos: 'CM' },
+      { slug: 'gerry-daly', name: 'Gerry Daly', pos: 'CM' },
+      { slug: 'stewart-houston', name: 'Stewart Houston', pos: 'LB' },
+      { slug: 'alex-forsyth', name: 'Alex Forsyth', pos: 'RB' }
     ]
   },
   {
@@ -497,6 +658,13 @@ export const seasons = [
       { number: 8, name: 'Jimmy Greenhoff', slug: 'jimmy-greenhoff', position: 'FW' },
       { number: 9, name: 'Joe Jordan', slug: 'joe-jordan', position: 'CF' },
       { number: 11, name: 'Gordon Hill', slug: 'gordon-hill', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'gordon-mcqueen', name: 'Gordon McQueen', pos: 'CB' },
+      { slug: 'stuart-pearson', name: 'Stuart Pearson', pos: 'CF' },
+      { slug: 'david-mccreery', name: 'David McCreery', pos: 'CM' },
+      { slug: 'ashley-grimes', name: 'Ashley Grimes', pos: 'LW' },
+      { slug: 'paddy-roche', name: 'Paddy Roche', pos: 'GK' }
     ]
   },
   {
@@ -517,6 +685,12 @@ export const seasons = [
       { number: 8, name: 'Jimmy Greenhoff', slug: 'jimmy-greenhoff', position: 'FW' },
       { number: 9, name: 'Joe Jordan', slug: 'joe-jordan', position: 'CF' },
       { number: 11, name: 'Mickey Thomas', slug: 'mickey-thomas', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'brian-greenhoff', name: 'Brian Greenhoff', pos: 'CB' },
+      { slug: 'andy-ritchie', name: 'Andy Ritchie', pos: 'ST' },
+      { slug: 'david-mccreery', name: 'David McCreery', pos: 'CM' },
+      { slug: 'stuart-pearson', name: 'Stuart Pearson', pos: 'CF' }
     ]
   },
   {
@@ -537,6 +711,13 @@ export const seasons = [
       { number: 10, name: 'Lou Macari', slug: 'lou-macari', position: 'CAM' },
       { number: 9, name: 'Joe Jordan', slug: 'joe-jordan', position: 'CF' },
       { number: 11, name: 'Mickey Thomas', slug: 'mickey-thomas', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'jimmy-greenhoff', name: 'Jimmy Greenhoff', pos: 'FW' },
+      { slug: 'kevin-moran', name: 'Kevin Moran', pos: 'CB' },
+      { slug: 'andy-ritchie', name: 'Andy Ritchie', pos: 'ST' },
+      { slug: 'nikola-jovanovic', name: 'Nikola Jovanović', pos: 'CB' },
+      { slug: 'ashley-grimes', name: 'Ashley Grimes', pos: 'LW' }
     ]
   },
   {
@@ -557,6 +738,13 @@ export const seasons = [
       { number: 10, name: 'Lou Macari', slug: 'lou-macari', position: 'CAM' },
       { number: 9, name: 'Joe Jordan', slug: 'joe-jordan', position: 'CF' },
       { number: 11, name: 'Mickey Thomas', slug: 'mickey-thomas', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'garry-birtles', name: 'Garry Birtles', pos: 'FW' },
+      { slug: 'kevin-moran', name: 'Kevin Moran', pos: 'CB' },
+      { slug: 'jimmy-greenhoff', name: 'Jimmy Greenhoff', pos: 'FW' },
+      { slug: 'ashley-grimes', name: 'Ashley Grimes', pos: 'LW' },
+      { slug: 'nikola-jovanovic', name: 'Nikola Jovanović', pos: 'CB' }
     ]
   },
   {
@@ -577,6 +765,12 @@ export const seasons = [
       { number: 7, name: 'Steve Coppell', slug: 'steve-coppell', position: 'RW' },
       { number: 9, name: 'Frank Stapleton', slug: 'frank-stapleton', position: 'ST' },
       { number: 11, name: 'Garry Birtles', slug: 'garry-birtles', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'norman-whiteside', name: 'Norman Whiteside', pos: 'FW' },
+      { slug: 'sammy-mcilroy', name: 'Sammy McIlroy', pos: 'CM' },
+      { slug: 'lou-macari', name: 'Lou Macari', pos: 'FW' },
+      { slug: 'gordon-mcqueen', name: 'Gordon McQueen', pos: 'CB' }
     ]
   },
   {
@@ -597,6 +791,13 @@ export const seasons = [
       { number: 7, name: 'Steve Coppell', slug: 'steve-coppell', position: 'RW' },
       { number: 9, name: 'Frank Stapleton', slug: 'frank-stapleton', position: 'ST' },
       { number: 11, name: 'Norman Whiteside', slug: 'norman-whiteside', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'lou-macari', name: 'Lou Macari', pos: 'FW' },
+      { slug: 'remi-moses', name: 'Remi Moses', pos: 'CM' },
+      { slug: 'paul-mcgrath', name: 'Paul McGrath', pos: 'CB' },
+      { slug: 'john-gidman', name: 'John Gidman', pos: 'RB' },
+      { slug: 'alan-davies', name: 'Alan Davies', pos: 'RW' }
     ]
   },
   {
@@ -617,6 +818,13 @@ export const seasons = [
       { number: 7, name: 'Arthur Graham', slug: 'arthur-graham', position: 'RW' },
       { number: 9, name: 'Frank Stapleton', slug: 'frank-stapleton', position: 'ST' },
       { number: 11, name: 'Norman Whiteside', slug: 'norman-whiteside', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'mark-hughes', name: 'Mark Hughes', pos: 'ST' },
+      { slug: 'paul-mcgrath', name: 'Paul McGrath', pos: 'CB' },
+      { slug: 'remi-moses', name: 'Remi Moses', pos: 'CM' },
+      { slug: 'lou-macari', name: 'Lou Macari', pos: 'FW' },
+      { slug: 'john-gidman', name: 'John Gidman', pos: 'RB' }
     ]
   },
   {
@@ -637,6 +845,12 @@ export const seasons = [
       { number: 11, name: 'Jesper Olsen', slug: 'jesper-olsen', position: 'LW' },
       { number: 9, name: 'Frank Stapleton', slug: 'frank-stapleton', position: 'ST' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'mike-duxbury', name: 'Mike Duxbury', pos: 'RB' },
+      { slug: 'remi-moses', name: 'Remi Moses', pos: 'CM' },
+      { slug: 'alan-brazil', name: 'Alan Brazil', pos: 'ST' },
+      { slug: 'graeme-hogg', name: 'Graeme Hogg', pos: 'CB' }
     ]
   },
   {
@@ -657,6 +871,13 @@ export const seasons = [
       { number: 11, name: 'Jesper Olsen', slug: 'jesper-olsen', position: 'LW' },
       { number: 9, name: 'Frank Stapleton', slug: 'frank-stapleton', position: 'ST' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'peter-barnes', name: 'Peter Barnes', pos: 'LW' },
+      { slug: 'colin-gibson', name: 'Colin Gibson', pos: 'LB' },
+      { slug: 'terry-gibson', name: 'Terry Gibson', pos: 'ST' },
+      { slug: 'john-sivebaek', name: 'John Sivebæk', pos: 'RB' },
+      { slug: 'chris-turner', name: 'Chris Turner', pos: 'GK' }
     ]
   },
   {
@@ -677,6 +898,13 @@ export const seasons = [
       { number: 11, name: 'Jesper Olsen', slug: 'jesper-olsen', position: 'LW' },
       { number: 9, name: 'Frank Stapleton', slug: 'frank-stapleton', position: 'ST' },
       { number: 10, name: 'Peter Davenport', slug: 'peter-davenport', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'remi-moses', name: 'Remi Moses', pos: 'CM' },
+      { slug: 'john-sivebaek', name: 'John Sivebæk', pos: 'RB' },
+      { slug: 'colin-gibson', name: 'Colin Gibson', pos: 'LB' },
+      { slug: 'terry-gibson', name: 'Terry Gibson', pos: 'ST' },
+      { slug: 'gary-walsh', name: 'Gary Walsh', pos: 'GK' }
     ]
   },
   {
@@ -697,6 +925,13 @@ export const seasons = [
       { number: 11, name: 'Jesper Olsen', slug: 'jesper-olsen', position: 'LW' },
       { number: 9, name: 'Brian McClair', slug: 'brian-mcclair', position: 'ST' },
       { number: 10, name: 'Peter Davenport', slug: 'peter-davenport', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'kevin-moran', name: 'Kevin Moran', pos: 'CB' },
+      { slug: 'remi-moses', name: 'Remi Moses', pos: 'CM' },
+      { slug: 'colin-gibson', name: 'Colin Gibson', pos: 'LB' },
+      { slug: 'liam-obrien', name: 'Liam O’Brien', pos: 'CM' },
+      { slug: 'gary-walsh', name: 'Gary Walsh', pos: 'GK' }
     ]
   },
   {
@@ -717,6 +952,12 @@ export const seasons = [
       { number: 11, name: 'Lee Sharpe', slug: 'lee-sharpe', position: 'LW' },
       { number: 9, name: 'Brian McClair', slug: 'brian-mcclair', position: 'ST' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'norman-whiteside', name: 'Norman Whiteside', pos: 'CM' },
+      { slug: 'ralph-milne', name: 'Ralph Milne', pos: 'LW' },
+      { slug: 'russell-beardsmore', name: 'Russell Beardsmore', pos: 'RW' },
+      { slug: 'clayton-blackmore', name: 'Clayton Blackmore', pos: 'CM' }
     ]
   },
   {
@@ -737,6 +978,13 @@ export const seasons = [
       { number: 11, name: 'Danny Wallace', slug: 'danny-wallace', position: 'LW' },
       { number: 9, name: 'Brian McClair', slug: 'brian-mcclair', position: 'ST' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'mark-robins', name: 'Mark Robins', pos: 'ST' },
+      { slug: 'neil-webb', name: 'Neil Webb', pos: 'CM' },
+      { slug: 'les-sealey', name: 'Les Sealey', pos: 'GK' },
+      { slug: 'mal-donaghy', name: 'Mal Donaghy', pos: 'CB' },
+      { slug: 'clayton-blackmore', name: 'Clayton Blackmore', pos: 'CM' }
     ]
   },
   {
@@ -757,6 +1005,13 @@ export const seasons = [
       { number: 11, name: 'Lee Sharpe', slug: 'lee-sharpe', position: 'LW' },
       { number: 9, name: 'Brian McClair', slug: 'brian-mcclair', position: 'ST' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'ryan-giggs', name: 'Ryan Giggs', pos: 'LW' },
+      { slug: 'mark-robins', name: 'Mark Robins', pos: 'ST' },
+      { slug: 'danny-wallace', name: 'Danny Wallace', pos: 'LW' },
+      { slug: 'mal-donaghy', name: 'Mal Donaghy', pos: 'CB' },
+      { slug: 'mike-phelan', name: 'Mike Phelan', pos: 'CM' }
     ]
   },
   {
@@ -777,6 +1032,13 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 9, name: 'Brian McClair', slug: 'brian-mcclair', position: 'ST' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'FW' }
+    ],
+    squad: [
+      { slug: 'andrei-kanchelskis', name: 'Andrei Kanchelskis', pos: 'RW' },
+      { slug: 'lee-sharpe', name: 'Lee Sharpe', pos: 'LW' },
+      { slug: 'mike-phelan', name: 'Mike Phelan', pos: 'CM' },
+      { slug: 'clayton-blackmore', name: 'Clayton Blackmore', pos: 'LB' },
+      { slug: 'mal-donaghy', name: 'Mal Donaghy', pos: 'CB' }
     ]
   },
   {
@@ -797,6 +1059,13 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 10, name: 'Eric Cantona', slug: 'eric-cantona', position: 'FW' },
       { number: 9, name: 'Mark Hughes', slug: 'mark-hughes', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'bryan-robson', name: 'Bryan Robson', pos: 'CM' },
+      { slug: 'lee-sharpe', name: 'Lee Sharpe', pos: 'LW' },
+      { slug: 'dion-dublin', name: 'Dion Dublin', pos: 'ST' },
+      { slug: 'mike-phelan', name: 'Mike Phelan', pos: 'CM' },
+      { slug: 'clayton-blackmore', name: 'Clayton Blackmore', pos: 'LB' }
     ]
   },
   {
@@ -817,6 +1086,12 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 7, name: 'Eric Cantona', slug: 'eric-cantona', position: 'FW' },
       { number: 10, name: 'Mark Hughes', slug: 'mark-hughes', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'bryan-robson', name: 'Bryan Robson', pos: 'CM' },
+      { slug: 'lee-sharpe', name: 'Lee Sharpe', pos: 'LW' },
+      { slug: 'brian-mcclair', name: 'Brian McClair', pos: 'FW' },
+      { slug: 'dion-dublin', name: 'Dion Dublin', pos: 'ST' }
     ]
   },
   {
@@ -837,6 +1112,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 7, name: 'Eric Cantona', slug: 'eric-cantona', position: 'FW' },
       { number: 17, name: 'Andy Cole', slug: 'andy-cole', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'mark-hughes', name: 'Mark Hughes', pos: 'ST' },
+      { slug: 'paul-scholes', name: 'Paul Scholes', pos: 'FW' },
+      { slug: 'gary-neville', name: 'Gary Neville', pos: 'RB' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'lee-sharpe', name: 'Lee Sharpe', pos: 'LW' },
+      { slug: 'brian-mcclair', name: 'Brian McClair', pos: 'FW' }
     ]
   },
   {
@@ -857,6 +1140,13 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 7, name: 'Eric Cantona', slug: 'eric-cantona', position: 'FW' },
       { number: 17, name: 'Andy Cole', slug: 'andy-cole', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'paul-scholes', name: 'Paul Scholes', pos: 'FW' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'RB' },
+      { slug: 'david-may', name: 'David May', pos: 'CB' },
+      { slug: 'lee-sharpe', name: 'Lee Sharpe', pos: 'LW' },
+      { slug: 'brian-mcclair', name: 'Brian McClair', pos: 'FW' }
     ]
   },
   {
@@ -877,6 +1167,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 7, name: 'Eric Cantona', slug: 'eric-cantona', position: 'FW', captain: true },
       { number: 20, name: 'Ole Gunnar Solskjær', slug: 'ole-gunnar-solskjaer', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'paul-scholes', name: 'Paul Scholes', pos: 'CM' },
+      { slug: 'andy-cole', name: 'Andy Cole', pos: 'ST' },
+      { slug: 'ronny-johnsen', name: 'Ronny Johnsen', pos: 'CB' },
+      { slug: 'karel-poborsky', name: 'Karel Poborský', pos: 'RW' },
+      { slug: 'jordi-cruyff', name: 'Jordi Cruyff', pos: 'FW' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'LB' }
     ]
   },
   {
@@ -897,6 +1195,13 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 10, name: 'Teddy Sheringham', slug: 'teddy-sheringham', position: 'FW' },
       { number: 9, name: 'Andy Cole', slug: 'andy-cole', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'roy-keane', name: 'Roy Keane', pos: 'CM' },
+      { slug: 'ole-gunnar-solskjaer', name: 'Ole Gunnar Solskjær', pos: 'ST' },
+      { slug: 'ronny-johnsen', name: 'Ronny Johnsen', pos: 'CB' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'LB' },
+      { slug: 'david-may', name: 'David May', pos: 'CB' }
     ]
   },
   {
@@ -917,6 +1222,15 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 19, name: 'Dwight Yorke', slug: 'dwight-yorke', position: 'ST' },
       { number: 9, name: 'Andy Cole', slug: 'andy-cole', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'ole-gunnar-solskjaer', name: 'Ole Gunnar Solskjær', pos: 'ST' },
+      { slug: 'teddy-sheringham', name: 'Teddy Sheringham', pos: 'FW' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'jesper-blomqvist', name: 'Jesper Blomqvist', pos: 'LW' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'LB' },
+      { slug: 'henning-berg', name: 'Henning Berg', pos: 'CB' },
+      { slug: 'wes-brown', name: 'Wes Brown', pos: 'CB' }
     ]
   },
   {
@@ -937,6 +1251,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 19, name: 'Dwight Yorke', slug: 'dwight-yorke', position: 'ST' },
       { number: 9, name: 'Andy Cole', slug: 'andy-cole', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'ole-gunnar-solskjaer', name: 'Ole Gunnar Solskjær', pos: 'ST' },
+      { slug: 'teddy-sheringham', name: 'Teddy Sheringham', pos: 'FW' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'mikael-silvestre', name: 'Mikaël Silvestre', pos: 'CB' },
+      { slug: 'quinton-fortune', name: 'Quinton Fortune', pos: 'LW' },
+      { slug: 'raimond-van-der-gouw', name: 'Raimond van der Gouw', pos: 'GK' }
     ]
   },
   {
@@ -957,6 +1279,13 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 10, name: 'Teddy Sheringham', slug: 'teddy-sheringham', position: 'FW' },
       { number: 9, name: 'Andy Cole', slug: 'andy-cole', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'ole-gunnar-solskjaer', name: 'Ole Gunnar Solskjær', pos: 'ST' },
+      { slug: 'dwight-yorke', name: 'Dwight Yorke', pos: 'ST' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'mikael-silvestre', name: 'Mikaël Silvestre', pos: 'CB' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'LB' }
     ]
   },
   {
@@ -977,6 +1306,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 20, name: 'Ole Gunnar Solskjær', slug: 'ole-gunnar-solskjaer', position: 'FW' },
       { number: 10, name: 'Ruud van Nistelrooy', slug: 'ruud-van-nistelrooy', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'juan-sebastian-veron', name: 'Juan Sebastián Verón', pos: 'CM' },
+      { slug: 'diego-forlan', name: 'Diego Forlán', pos: 'ST' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'andy-cole', name: 'Andy Cole', pos: 'ST' },
+      { slug: 'dwight-yorke', name: 'Dwight Yorke', pos: 'ST' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'CM' }
     ]
   },
   {
@@ -997,6 +1334,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 20, name: 'Ole Gunnar Solskjær', slug: 'ole-gunnar-solskjaer', position: 'FW' },
       { number: 10, name: 'Ruud van Nistelrooy', slug: 'ruud-van-nistelrooy', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'juan-sebastian-veron', name: 'Juan Sebastián Verón', pos: 'CM' },
+      { slug: 'diego-forlan', name: 'Diego Forlán', pos: 'ST' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'laurent-blanc', name: 'Laurent Blanc', pos: 'CB' },
+      { slug: 'wes-brown', name: 'Wes Brown', pos: 'CB' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'CM' }
     ]
   },
   {
@@ -1017,6 +1362,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 9, name: 'Louis Saha', slug: 'louis-saha', position: 'FW' },
       { number: 10, name: 'Ruud van Nistelrooy', slug: 'ruud-van-nistelrooy', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'darren-fletcher', name: 'Darren Fletcher', pos: 'CM' },
+      { slug: 'nicky-butt', name: 'Nicky Butt', pos: 'CM' },
+      { slug: 'diego-forlan', name: 'Diego Forlán', pos: 'ST' },
+      { slug: 'kleberson', name: 'Kléberson', pos: 'CM' },
+      { slug: 'wes-brown', name: 'Wes Brown', pos: 'CB' },
+      { slug: 'quinton-fortune', name: 'Quinton Fortune', pos: 'LB' }
     ]
   },
   {
@@ -1037,6 +1390,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 8, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 10, name: 'Ruud van Nistelrooy', slug: 'ruud-van-nistelrooy', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'alan-smith', name: 'Alan Smith', pos: 'FW' },
+      { slug: 'darren-fletcher', name: 'Darren Fletcher', pos: 'CM' },
+      { slug: 'john-oshea', name: 'John O’Shea', pos: 'CB' },
+      { slug: 'louis-saha', name: 'Louis Saha', pos: 'ST' },
+      { slug: 'wes-brown', name: 'Wes Brown', pos: 'CB' },
+      { slug: 'phil-neville', name: 'Phil Neville', pos: 'CM' }
     ]
   },
   {
@@ -1057,6 +1418,15 @@ export const seasons = [
       { number: 13, name: 'Park Ji-sung', slug: 'park-ji-sung', position: 'LW' },
       { number: 8, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 10, name: 'Ruud van Nistelrooy', slug: 'ruud-van-nistelrooy', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'roy-keane', name: 'Roy Keane', pos: 'CM' },
+      { slug: 'ryan-giggs', name: 'Ryan Giggs', pos: 'LW' },
+      { slug: 'nemanja-vidic', name: 'Nemanja Vidić', pos: 'CB' },
+      { slug: 'patrice-evra', name: 'Patrice Evra', pos: 'LB' },
+      { slug: 'louis-saha', name: 'Louis Saha', pos: 'ST' },
+      { slug: 'john-oshea', name: 'John O’Shea', pos: 'CB' },
+      { slug: 'alan-smith', name: 'Alan Smith', pos: 'CM' }
     ]
   },
   {
@@ -1077,6 +1447,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 8, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 9, name: 'Louis Saha', slug: 'louis-saha', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'ole-gunnar-solskjaer', name: 'Ole Gunnar Solskjær', pos: 'ST' },
+      { slug: 'henrik-larsson', name: 'Henrik Larsson', pos: 'ST' },
+      { slug: 'park-ji-sung', name: 'Park Ji-sung', pos: 'RW' },
+      { slug: 'john-oshea', name: 'John O’Shea', pos: 'CB' },
+      { slug: 'darren-fletcher', name: 'Darren Fletcher', pos: 'CM' },
+      { slug: 'gabriel-heinze', name: 'Gabriel Heinze', pos: 'LB' }
     ]
   },
   {
@@ -1097,6 +1475,14 @@ export const seasons = [
       { number: 7, name: 'Cristiano Ronaldo', slug: 'cristiano-ronaldo', position: 'RW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 32, name: 'Carlos Tévez', slug: 'carlos-tevez', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'ryan-giggs', name: 'Ryan Giggs', pos: 'LW' },
+      { slug: 'nani', name: 'Nani', pos: 'LW' },
+      { slug: 'anderson', name: 'Anderson', pos: 'CM' },
+      { slug: 'park-ji-sung', name: 'Park Ji-sung', pos: 'RW' },
+      { slug: 'john-oshea', name: 'John O’Shea', pos: 'CB' },
+      { slug: 'darren-fletcher', name: 'Darren Fletcher', pos: 'CM' }
     ]
   },
   {
@@ -1117,6 +1503,14 @@ export const seasons = [
       { number: 7, name: 'Cristiano Ronaldo', slug: 'cristiano-ronaldo', position: 'RW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'LW' },
       { number: 32, name: 'Carlos Tévez', slug: 'carlos-tevez', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'dimitar-berbatov', name: 'Dimitar Berbatov', pos: 'ST' },
+      { slug: 'federico-macheda', name: 'Federico Macheda', pos: 'ST' },
+      { slug: 'paul-scholes', name: 'Paul Scholes', pos: 'CM' },
+      { slug: 'park-ji-sung', name: 'Park Ji-sung', pos: 'LW' },
+      { slug: 'nani', name: 'Nani', pos: 'LW' },
+      { slug: 'rafael', name: 'Rafael', pos: 'RB' }
     ]
   },
   {
@@ -1137,6 +1531,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 9, name: 'Dimitar Berbatov', slug: 'dimitar-berbatov', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'michael-owen', name: 'Michael Owen', pos: 'ST' },
+      { slug: 'nani', name: 'Nani', pos: 'RW' },
+      { slug: 'michael-carrick', name: 'Michael Carrick', pos: 'CM' },
+      { slug: 'park-ji-sung', name: 'Park Ji-sung', pos: 'LW' },
+      { slug: 'gary-neville', name: 'Gary Neville', pos: 'RB' },
+      { slug: 'john-oshea', name: 'John O’Shea', pos: 'RB' }
     ]
   },
   {
@@ -1157,6 +1559,14 @@ export const seasons = [
       { number: 11, name: 'Ryan Giggs', slug: 'ryan-giggs', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 9, name: 'Dimitar Berbatov', slug: 'dimitar-berbatov', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'javier-hernandez', name: 'Javier Hernández', pos: 'ST' },
+      { slug: 'park-ji-sung', name: 'Park Ji-sung', pos: 'LW' },
+      { slug: 'antonio-valencia', name: 'Antonio Valencia', pos: 'RW' },
+      { slug: 'darren-fletcher', name: 'Darren Fletcher', pos: 'CM' },
+      { slug: 'anderson', name: 'Anderson', pos: 'CM' },
+      { slug: 'john-oshea', name: 'John O’Shea', pos: 'RB' }
     ]
   },
   {
@@ -1177,6 +1587,14 @@ export const seasons = [
       { number: 17, name: 'Nani', slug: 'nani', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 19, name: 'Danny Welbeck', slug: 'danny-welbeck', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'paul-scholes', name: 'Paul Scholes', pos: 'CM' },
+      { slug: 'javier-hernandez', name: 'Javier Hernández', pos: 'ST' },
+      { slug: 'ashley-young', name: 'Ashley Young', pos: 'LW' },
+      { slug: 'chris-smalling', name: 'Chris Smalling', pos: 'CB' },
+      { slug: 'park-ji-sung', name: 'Park Ji-sung', pos: 'CM' },
+      { slug: 'tom-cleverley', name: 'Tom Cleverley', pos: 'CM' }
     ]
   },
   {
@@ -1197,6 +1615,15 @@ export const seasons = [
       { number: 26, name: 'Shinji Kagawa', slug: 'shinji-kagawa', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 20, name: 'Robin van Persie', slug: 'robin-van-persie', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'ryan-giggs', name: 'Ryan Giggs', pos: 'CM' },
+      { slug: 'paul-scholes', name: 'Paul Scholes', pos: 'CM' },
+      { slug: 'javier-hernandez', name: 'Javier Hernández', pos: 'ST' },
+      { slug: 'danny-welbeck', name: 'Danny Welbeck', pos: 'FW' },
+      { slug: 'jonny-evans', name: 'Jonny Evans', pos: 'CB' },
+      { slug: 'ashley-young', name: 'Ashley Young', pos: 'LW' },
+      { slug: 'nani', name: 'Nani', pos: 'RW' }
     ]
   },
   {
@@ -1217,6 +1644,15 @@ export const seasons = [
       { number: 44, name: 'Adnan Januzaj', slug: 'adnan-januzaj', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW' },
       { number: 20, name: 'Robin van Persie', slug: 'robin-van-persie', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'juan-mata', name: 'Juan Mata', pos: 'CAM' },
+      { slug: 'marouane-fellaini', name: 'Marouane Fellaini', pos: 'CM' },
+      { slug: 'ryan-giggs', name: 'Ryan Giggs', pos: 'CM' },
+      { slug: 'danny-welbeck', name: 'Danny Welbeck', pos: 'FW' },
+      { slug: 'javier-hernandez', name: 'Javier Hernández', pos: 'ST' },
+      { slug: 'shinji-kagawa', name: 'Shinji Kagawa', pos: 'CAM' },
+      { slug: 'phil-jones', name: 'Phil Jones', pos: 'CB' }
     ]
   },
   {
@@ -1237,6 +1673,14 @@ export const seasons = [
       { number: 7, name: 'Ángel Di María', slug: 'angel-di-maria', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW', captain: true },
       { number: 20, name: 'Robin van Persie', slug: 'robin-van-persie', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'radamel-falcao', name: 'Radamel Falcao', pos: 'ST' },
+      { slug: 'marouane-fellaini', name: 'Marouane Fellaini', pos: 'CM' },
+      { slug: 'ashley-young', name: 'Ashley Young', pos: 'LW' },
+      { slug: 'michael-carrick', name: 'Michael Carrick', pos: 'CM' },
+      { slug: 'phil-jones', name: 'Phil Jones', pos: 'CB' },
+      { slug: 'rafael', name: 'Rafael', pos: 'RB' }
     ]
   },
   {
@@ -1257,6 +1701,14 @@ export const seasons = [
       { number: 35, name: 'Jesse Lingard', slug: 'jesse-lingard', position: 'LW' },
       { number: 10, name: 'Wayne Rooney', slug: 'wayne-rooney', position: 'FW', captain: true },
       { number: 9, name: 'Anthony Martial', slug: 'anthony-martial', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'marcus-rashford', name: 'Marcus Rashford', pos: 'ST' },
+      { slug: 'memphis-depay', name: 'Memphis Depay', pos: 'LW' },
+      { slug: 'bastian-schweinsteiger', name: 'Bastian Schweinsteiger', pos: 'CM' },
+      { slug: 'ander-herrera', name: 'Ander Herrera', pos: 'CM' },
+      { slug: 'ashley-young', name: 'Ashley Young', pos: 'RW' },
+      { slug: 'marouane-fellaini', name: 'Marouane Fellaini', pos: 'CM' }
     ]
   },
   {
@@ -1277,6 +1729,14 @@ export const seasons = [
       { number: 22, name: 'Henrikh Mkhitaryan', slug: 'henrikh-mkhitaryan', position: 'CAM' },
       { number: 11, name: 'Anthony Martial', slug: 'anthony-martial', position: 'LW' },
       { number: 9, name: 'Zlatan Ibrahimović', slug: 'zlatan-ibrahimovic', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'wayne-rooney', name: 'Wayne Rooney', pos: 'FW' },
+      { slug: 'marcus-rashford', name: 'Marcus Rashford', pos: 'ST' },
+      { slug: 'jesse-lingard', name: 'Jesse Lingard', pos: 'RW' },
+      { slug: 'michael-carrick', name: 'Michael Carrick', pos: 'CM' },
+      { slug: 'marouane-fellaini', name: 'Marouane Fellaini', pos: 'CM' },
+      { slug: 'phil-jones', name: 'Phil Jones', pos: 'CB' }
     ]
   },
   {
@@ -1297,6 +1757,14 @@ export const seasons = [
       { number: 19, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'RW' },
       { number: 11, name: 'Anthony Martial', slug: 'anthony-martial', position: 'LW' },
       { number: 9, name: 'Romelu Lukaku', slug: 'romelu-lukaku', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'alexis-sanchez', name: 'Alexis Sánchez', pos: 'LW' },
+      { slug: 'juan-mata', name: 'Juan Mata', pos: 'RW' },
+      { slug: 'ander-herrera', name: 'Ander Herrera', pos: 'CM' },
+      { slug: 'victor-lindelof', name: 'Victor Lindelöf', pos: 'CB' },
+      { slug: 'marouane-fellaini', name: 'Marouane Fellaini', pos: 'CM' },
+      { slug: 'eric-bailly', name: 'Eric Bailly', pos: 'CB' }
     ]
   },
   {
@@ -1317,6 +1785,14 @@ export const seasons = [
       { number: 14, name: 'Jesse Lingard', slug: 'jesse-lingard', position: 'CAM' },
       { number: 10, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'ST' },
       { number: 11, name: 'Anthony Martial', slug: 'anthony-martial', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'romelu-lukaku', name: 'Romelu Lukaku', pos: 'ST' },
+      { slug: 'fred', name: 'Fred', pos: 'CM' },
+      { slug: 'alexis-sanchez', name: 'Alexis Sánchez', pos: 'LW' },
+      { slug: 'juan-mata', name: 'Juan Mata', pos: 'RW' },
+      { slug: 'diogo-dalot', name: 'Diogo Dalot', pos: 'RB' },
+      { slug: 'eric-bailly', name: 'Eric Bailly', pos: 'CB' }
     ]
   },
   {
@@ -1337,6 +1813,14 @@ export const seasons = [
       { number: 21, name: 'Daniel James', slug: 'daniel-james', position: 'RW' },
       { number: 10, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'LW' },
       { number: 9, name: 'Anthony Martial', slug: 'anthony-martial', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'mason-greenwood', name: 'Mason Greenwood', pos: 'FW' },
+      { slug: 'fred', name: 'Fred', pos: 'CM' },
+      { slug: 'odion-ighalo', name: 'Odion Ighalo', pos: 'ST' },
+      { slug: 'jesse-lingard', name: 'Jesse Lingard', pos: 'CAM' },
+      { slug: 'juan-mata', name: 'Juan Mata', pos: 'RW' },
+      { slug: 'brandon-williams', name: 'Brandon Williams', pos: 'LB' }
     ]
   },
   {
@@ -1357,6 +1841,14 @@ export const seasons = [
       { number: 11, name: 'Mason Greenwood', slug: 'mason-greenwood', position: 'RW' },
       { number: 10, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'LW' },
       { number: 7, name: 'Edinson Cavani', slug: 'edinson-cavani', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'fred', name: 'Fred', pos: 'CM' },
+      { slug: 'donny-van-de-beek', name: 'Donny van de Beek', pos: 'CM' },
+      { slug: 'alex-telles', name: 'Alex Telles', pos: 'LB' },
+      { slug: 'dean-henderson', name: 'Dean Henderson', pos: 'GK' },
+      { slug: 'anthony-martial', name: 'Anthony Martial', pos: 'ST' },
+      { slug: 'daniel-james', name: 'Daniel James', pos: 'RW' }
     ]
   },
   {
@@ -1377,6 +1869,14 @@ export const seasons = [
       { number: 25, name: 'Jadon Sancho', slug: 'jadon-sancho', position: 'LW' },
       { number: 10, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'RW' },
       { number: 7, name: 'Cristiano Ronaldo', slug: 'cristiano-ronaldo', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'paul-pogba', name: 'Paul Pogba', pos: 'CM' },
+      { slug: 'edinson-cavani', name: 'Edinson Cavani', pos: 'ST' },
+      { slug: 'fred', name: 'Fred', pos: 'CM' },
+      { slug: 'anthony-elanga', name: 'Anthony Elanga', pos: 'LW' },
+      { slug: 'victor-lindelof', name: 'Victor Lindelöf', pos: 'CB' },
+      { slug: 'alex-telles', name: 'Alex Telles', pos: 'LB' }
     ]
   },
   {
@@ -1397,6 +1897,15 @@ export const seasons = [
       { number: 21, name: 'Antony', slug: 'antony', position: 'RW' },
       { number: 10, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'LW' },
       { number: 9, name: 'Anthony Martial', slug: 'anthony-martial', position: 'ST' }
+    ],
+    squad: [
+      { slug: 'alejandro-garnacho', name: 'Alejandro Garnacho', pos: 'LW' },
+      { slug: 'scott-mctominay', name: 'Scott McTominay', pos: 'CM' },
+      { slug: 'jadon-sancho', name: 'Jadon Sancho', pos: 'LW' },
+      { slug: 'fred', name: 'Fred', pos: 'CM' },
+      { slug: 'wout-weghorst', name: 'Wout Weghorst', pos: 'ST' },
+      { slug: 'aaron-wan-bissaka', name: 'Aaron Wan-Bissaka', pos: 'RB' },
+      { slug: 'tyrell-malacia', name: 'Tyrell Malacia', pos: 'LB' }
     ]
   },
   {
@@ -1417,6 +1926,15 @@ export const seasons = [
       { number: 17, name: 'Alejandro Garnacho', slug: 'alejandro-garnacho', position: 'RW' },
       { number: 11, name: 'Rasmus Højlund', slug: 'rasmus-hojlund', position: 'ST' },
       { number: 10, name: 'Marcus Rashford', slug: 'marcus-rashford', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'mason-mount', name: 'Mason Mount', pos: 'CM' },
+      { slug: 'scott-mctominay', name: 'Scott McTominay', pos: 'CM' },
+      { slug: 'antony', name: 'Antony', pos: 'RW' },
+      { slug: 'harry-maguire', name: 'Harry Maguire', pos: 'CB' },
+      { slug: 'christian-eriksen', name: 'Christian Eriksen', pos: 'CM' },
+      { slug: 'sofyan-amrabat', name: 'Sofyan Amrabat', pos: 'CDM' },
+      { slug: 'luke-shaw', name: 'Luke Shaw', pos: 'LB' }
     ]
   },
   {
@@ -1437,6 +1955,15 @@ export const seasons = [
       { number: 16, name: 'Amad Diallo', slug: 'amad-diallo', position: 'RW' },
       { number: 9, name: 'Rasmus Højlund', slug: 'rasmus-hojlund', position: 'ST' },
       { number: 17, name: 'Alejandro Garnacho', slug: 'alejandro-garnacho', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'lisandro-martinez', name: 'Lisandro Martínez', pos: 'CB' },
+      { slug: 'marcus-rashford', name: 'Marcus Rashford', pos: 'LW' },
+      { slug: 'leny-yoro', name: 'Leny Yoro', pos: 'CB' },
+      { slug: 'joshua-zirkzee', name: 'Joshua Zirkzee', pos: 'ST' },
+      { slug: 'kobbie-mainoo', name: 'Kobbie Mainoo', pos: 'CM' },
+      { slug: 'patrick-dorgu', name: 'Patrick Dorgu', pos: 'LB' },
+      { slug: 'christian-eriksen', name: 'Christian Eriksen', pos: 'CM' }
     ]
   },
   {
@@ -1457,6 +1984,15 @@ export const seasons = [
       { number: 16, name: 'Amad Diallo', slug: 'amad-diallo', position: 'RW' },
       { number: 30, name: 'Benjamin Šeško', slug: 'benjamin-sesko', position: 'ST' },
       { number: 10, name: 'Matheus Cunha', slug: 'matheus-cunha', position: 'LW' }
+    ],
+    squad: [
+      { slug: 'bryan-mbeumo', name: 'Bryan Mbeumo', pos: 'RW' },
+      { slug: 'leny-yoro', name: 'Leny Yoro', pos: 'CB' },
+      { slug: 'harry-maguire', name: 'Harry Maguire', pos: 'CB' },
+      { slug: 'patrick-dorgu', name: 'Patrick Dorgu', pos: 'LB' },
+      { slug: 'mason-mount', name: 'Mason Mount', pos: 'CM' },
+      { slug: 'noussair-mazraoui', name: 'Noussair Mazraoui', pos: 'RB' },
+      { slug: 'manuel-ugarte', name: 'Manuel Ugarte', pos: 'CDM' }
     ]
   }
 ]
