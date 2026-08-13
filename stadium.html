@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Old Trafford — The Theatre of Dreams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body class="locked">
+    <!-- Loading screen -->
+    <div id="loading">
+      <p class="loading-kicker">Manchester &middot; est. 1910</p>
+      <h1 class="loading-title">Old Trafford</h1>
+      <div class="loading-bar-container">
+        <div id="loading-bar" class="loading-bar"></div>
+      </div>
+      <span id="loading-percent" class="loading-percent">0%</span>
+    </div>
+
+    <!-- Three.js canvas (fixed, behind everything) -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Scroll story — sections are built from src/data/story.js -->
+    <main id="story"></main>
+
+    <!-- Chapter dots -->
+    <nav id="dots" aria-label="Chapters"></nav>
+
+    <!-- Explore controls — revealed on the final section -->
+    <div id="ui">
+      <p id="stand-caption"></p>
+      <div id="stand-buttons">
+        <button class="stand-btn active" data-stand="all">Full stadium</button>
+        <button class="stand-btn" data-stand="east">East Stand</button>
+        <button class="stand-btn" data-stand="north">Stretford End</button>
+        <button class="stand-btn" data-stand="west">Sir Alex Ferguson</button>
+        <button class="stand-btn" data-stand="south">Sir Bobby Charlton</button>
+      </div>
+      <div id="controls">
+        <div class="control-row">
+          <label class="control-label" for="zoom-slider">Zoom</label>
+          <input type="range" id="zoom-slider" min="20" max="75" value="45" step="1" />
+        </div>
+        <div class="control-row">
+          <label class="control-label" for="rotate-slider">Rotate</label>
+          <input type="range" id="rotate-slider" min="-180" max="180" value="0" step="1" />
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

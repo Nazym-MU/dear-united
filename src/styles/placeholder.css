@@ -1,0 +1,79 @@
+:root {
+  --bg: #0d0c0a;
+  --ink: #e9e3d6;
+  --ink-dim: rgba(233, 227, 214, 0.66);
+  --ink-faint: rgba(233, 227, 214, 0.34);
+  --red: #c8635c;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.placeholder-page {
+  min-height: 100vh;
+  background: var(--bg);
+  background-image: radial-gradient(
+    ellipse 70% 55% at 50% 42%,
+    rgba(200, 99, 92, 0.1),
+    transparent 70%
+  );
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vw;
+}
+
+.placeholder {
+  max-width: 34rem;
+  text-align: center;
+}
+
+.placeholder-kicker {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.4rem;
+}
+
+.placeholder-title {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  font-weight: 500;
+  line-height: 1.05;
+  margin-bottom: 1.3rem;
+}
+
+.placeholder-note {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-dim);
+  margin-bottom: 2.6rem;
+}
+
+.placeholder-back {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200, 99, 92, 0.5);
+  padding-bottom: 0.3rem;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.placeholder-back:hover {
+  color: var(--ink);
+  border-color: var(--red);
+}

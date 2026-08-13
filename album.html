@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Player Album — Manchester United</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nerko+One&family=Nunito:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+      <style>
+      html { background: #0d0c0a; }
+      body { opacity: 0; }
+      body.ready { opacity: 1; transition: opacity 0.35s ease; }
+    </style>
+    <script>
+      window.addEventListener('load', () => document.body.classList.add('ready'))
+    </script>
+  </head>
+  <body class="album-page">
+    <a id="back-pill" href="/">&larr; Dear United</a>
+
+    <main id="album-stage" aria-label="Player album">
+      <div id="book-scale">
+        <div id="book-shift">
+          <div id="book"></div>
+        </div>
+      </div>
+
+      <nav id="year-carousel" aria-label="Seasons"></nav>
+    </main>
+
+    <script type="module" src="/src/album.js"></script>
+  </body>
+</html>
