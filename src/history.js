@@ -34,7 +34,7 @@ stage.appendChild(zoom)
 
 const grassProbe = new Image()
 grassProbe.onload = () => pitch.classList.add('has-photo')
-grassProbe.src = '/textures/grass.jpg'
+grassProbe.src = 'textures/grass.jpg'
 
 const markers = eras.map((era) => {
   const m = el('div', 'hx-marker')

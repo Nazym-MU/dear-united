@@ -9,10 +9,10 @@ export const eras = [
     years: 'Lancashire & Yorkshire Railway · 1878–1902',
     body: "Founded in 1878 by the Carriage & Wagon department of the Lancashire & Yorkshire Railway at Newton Heath. First recorded match on 20 November 1880 — a 6–0 loss to Bolton's reserves. The club cut its railway ties and dropped \"LYR\" in 1890, entered the First Division for 1892–93, then survived near-bankruptcy to be reborn as Manchester United in 1902.",
     photos: [
-      { src: '/photos/history/newton-heath-1.jpg', caption: 'The railway works at Newton Heath' },
-      { src: '/photos/history/newton-heath-2.jpg', caption: 'North Road, the first ground' },
-      { src: '/photos/history/newton-heath-3.jpg', caption: 'Bank Street, Clayton' },
-      { src: '/photos/history/newton-heath-4.jpg', caption: 'Harry Stafford, the captain who saved the club' },
+      { src: 'photos/history/newton-heath-1.jpg', caption: 'The railway works at Newton Heath' },
+      { src: 'photos/history/newton-heath-2.jpg', caption: 'North Road, the first ground' },
+      { src: 'photos/history/newton-heath-3.jpg', caption: 'Bank Street, Clayton' },
+      { src: 'photos/history/newton-heath-4.jpg', caption: 'Harry Stafford, the captain who saved the club' },
     ],
     items: [
       { type: 'headline', paper: 'MANCHESTER, 26 APRIL 1902', text: 'A NEW NAME: MANCHESTER UNITED', x: 55, y: 22, rot: -2, z: 3 },
@@ -33,10 +33,10 @@ export const eras = [
     years: '1903–1912',
     body: 'Ernest Mangnall arrived in 1903 and built the first great side. A first league title in 1907–08, nine points clear of Aston Villa. A first FA Cup in 1909 — 1–0 over Bristol City, Sandy Turnbull scoring. A second title in 1910–11, won by a single point. Then, a 40-year league drought.',
     photos: [
-      { src: '/photos/history/mangnall-1.jpg', caption: 'Ernest Mangnall' },
-      { src: '/photos/history/mangnall-2.jpg', caption: 'Billy Meredith' },
-      { src: '/photos/history/mangnall-3.jpg', caption: 'Charlie Roberts' },
-      { src: '/photos/history/mangnall-4.jpg', caption: 'Sandy Turnbull' },
+      { src: 'photos/history/mangnall-1.jpg', caption: 'Ernest Mangnall' },
+      { src: 'photos/history/mangnall-2.jpg', caption: 'Billy Meredith' },
+      { src: 'photos/history/mangnall-3.jpg', caption: 'Charlie Roberts' },
+      { src: 'photos/history/mangnall-4.jpg', caption: 'Sandy Turnbull' },
     ],
     items: [
       { type: 'headline', paper: 'ATHLETIC NEWS, APRIL 1908', text: 'LEAGUE CHAMPIONS AT LAST', x: 49, y: 21, rot: 2.2, z: 3 },
@@ -57,9 +57,9 @@ export const eras = [
     years: '1910',
     body: 'Old Trafford opened in February 1910, financed by chairman John Henry Davies and designed by Archibald Leitch, with room for around 80,000. A ground built like a promise — and it still keeps it.',
     photos: [
-      { src: '/photos/history/old-trafford-1.jpg', caption: 'Old Trafford' },
-      { src: '/photos/history/old-trafford-2.jpg', caption: 'John Henry Davies, the chairman who paid for it' },
-      { src: '/photos/history/old-trafford-3.jpg', caption: 'Archibald Leitch, the architect' },
+      { src: 'photos/history/old-trafford-1.jpg', caption: 'Old Trafford' },
+      { src: 'photos/history/old-trafford-2.jpg', caption: 'John Henry Davies, the chairman who paid for it' },
+      { src: 'photos/history/old-trafford-3.jpg', caption: 'Archibald Leitch, the architect' },
     ],
     items: [
       { type: 'headline', paper: 'MANCHESTER, FEBRUARY 1910', text: 'THE FINEST GROUND IN ENGLAND', x: 55, y: 22, rot: -2, z: 3 },
@@ -67,7 +67,7 @@ export const eras = [
       { type: 'margin', text: 'room for 80,000, they say', arrow: 'down', x: 46, y: 34, rot: 2, z: 3, m: true },
       { type: 'score', text: 'United 3–4 Liverpool · opening day 1910', x: 57, y: 65, rot: -2.5, z: 4 },
     ],
-    link: { href: '/stadium.html', label: 'Take the stadium tour' },
+    link: { href: 'stadium.html', label: 'Take the stadium tour' },
     variant: 2,
     zoom: 1.32,
   },
@@ -81,9 +81,9 @@ export const eras = [
     years: '1912–1945',
     body: "Decline, relegations, financial trouble. Then war: Old Trafford was bombed twice — 22 December 1940 and 11 March 1941 — destroying the main stand. United played home games at Maine Road for years, and the stadium didn't fully reopen until 1949.",
     photos: [
-      { src: '/photos/history/wilderness-1.jpg', caption: 'Maine Road, the borrowed home' },
-      { src: '/photos/history/wilderness-2.jpg', caption: 'Manchester in the Blitz' },
-      { src: '/photos/history/wilderness-3.jpg', caption: 'James W. Gibson, the saviour' },
+      { src: 'photos/history/wilderness-1.jpg', caption: 'Maine Road, the borrowed home' },
+      { src: 'photos/history/wilderness-2.jpg', caption: 'Manchester in the Blitz' },
+      { src: 'photos/history/wilderness-3.jpg', caption: 'James W. Gibson, the saviour' },
     ],
     items: [
       { type: 'headline', paper: 'MANCHESTER, MARCH 1941', text: 'OLD TRAFFORD HIT IN THE BLITZ', x: 55, y: 22, rot: 2.2, z: 3 },
@@ -104,10 +104,10 @@ export const eras = [
     years: '1945–1958',
     body: 'Matt Busby, appointed 1945. The FA Cup in 1948 and a top-four finish in each of the first five post-war seasons. League titles in 1952, 1956 and 1957 with an exceptionally young side — the Busby Babes — and the first English club to enter the European Cup.',
     photos: [
-      { src: '/photos/history/busby-babes-1.jpg', caption: 'Matt Busby' },
-      { src: '/photos/history/busby-babes-2.jpg', caption: 'Duncan Edwards' },
-      { src: '/photos/history/busby-babes-3.jpg', caption: 'Tommy Taylor' },
-      { src: '/photos/history/busby-babes-4.jpg', caption: 'Roger Byrne' },
+      { src: 'photos/history/busby-babes-1.jpg', caption: 'Matt Busby' },
+      { src: 'photos/history/busby-babes-2.jpg', caption: 'Duncan Edwards' },
+      { src: 'photos/history/busby-babes-3.jpg', caption: 'Tommy Taylor' },
+      { src: 'photos/history/busby-babes-4.jpg', caption: 'Roger Byrne' },
     ],
     items: [
       { type: 'headline', paper: 'MANCHESTER EVENING NEWS, 1956', text: 'THE BABES ARE CHAMPIONS', x: 49, y: 21, rot: -2.4, z: 3 },
@@ -128,8 +128,8 @@ export const eras = [
     years: '6 February 1958',
     body: 'BEA Flight 609 crashed on its third takeoff attempt from a slush-covered runway at Munich-Riem, returning from a European Cup tie against Red Star Belgrade. Twenty-three people died, among them eight players: Roger Byrne, Tommy Taylor, David Pegg, Eddie Colman, Mark Jones, Geoff Bent, Liam Whelan, and Duncan Edwards, who died in hospital fifteen days later, aged 21. Eight journalists were also killed, including former England keeper Frank Swift. Busby, critically injured, survived.',
     photos: [
-      { src: '/photos/history/munich-1.jpg', caption: 'Munich, 6 February 1958' },
-      { src: '/photos/history/munich-2.jpg', caption: 'Duncan Edwards' },
+      { src: 'photos/history/munich-1.jpg', caption: 'Munich, 6 February 1958' },
+      { src: 'photos/history/munich-2.jpg', caption: 'Duncan Edwards' },
     ],
     items: [],
     solemn: true,
@@ -146,10 +146,10 @@ export const eras = [
     years: '1958–1969',
     body: 'Recovery took roughly a decade: the FA Cup in 1963, league titles in 1965 and 1967. Then 29 May 1968, Wembley — United 4–1 Benfica after extra time. Charlton twice, Best, and Kidd on his 19th birthday. The first English club to win the European Cup, ten years after Munich. Busby stepped down in 1969.',
     photos: [
-      { src: '/photos/history/european-glory-1.jpg', caption: 'Bobby Charlton' },
-      { src: '/photos/history/european-glory-2.jpg', caption: 'George Best' },
-      { src: '/photos/history/european-glory-3.jpg', caption: 'Denis Law' },
-      { src: '/photos/history/european-glory-4.jpg', caption: 'Alex Stepney' },
+      { src: 'photos/history/european-glory-1.jpg', caption: 'Bobby Charlton' },
+      { src: 'photos/history/european-glory-2.jpg', caption: 'George Best' },
+      { src: 'photos/history/european-glory-3.jpg', caption: 'Denis Law' },
+      { src: 'photos/history/european-glory-4.jpg', caption: 'Alex Stepney' },
     ],
     items: [
       { type: 'headline', paper: 'DAILY MIRROR, 30 MAY 1968', text: 'UNITED ARE CHAMPIONS OF EUROPE', x: 55, y: 21, rot: -2.2, z: 3 },
@@ -170,10 +170,10 @@ export const eras = [
     years: '1969–1986',
     body: 'Tommy Docherty, appointed December 1972: relegated in 1974, back up as Second Division champions at the first attempt, FA Cup winners in 1977 over Liverpool — then sacked shortly after. Dave Sexton, 1977–81, went trophyless. Ron Atkinson, 1981–86, broke the British transfer record for Bryan Robson and won the FA Cup in 1983 and 1985.',
     photos: [
-      { src: '/photos/history/seventies-1.jpg', caption: 'Tommy Docherty' },
-      { src: '/photos/history/seventies-2.jpg', caption: 'Steve Coppell' },
-      { src: '/photos/history/seventies-3.jpg', caption: 'Ron Atkinson' },
-      { src: '/photos/history/seventies-4.jpg', caption: 'Bryan Robson' },
+      { src: 'photos/history/seventies-1.jpg', caption: 'Tommy Docherty' },
+      { src: 'photos/history/seventies-2.jpg', caption: 'Steve Coppell' },
+      { src: 'photos/history/seventies-3.jpg', caption: 'Ron Atkinson' },
+      { src: 'photos/history/seventies-4.jpg', caption: 'Bryan Robson' },
     ],
     items: [
       { type: 'headline', paper: 'APRIL 1974', text: 'RELEGATED', x: 47, y: 20, rot: -3, z: 3 },
@@ -194,10 +194,10 @@ export const eras = [
     years: '1986–2013',
     body: "November 1986: Alex Ferguson arrives. Nearly sacked before Mark Robins' FA Cup winner in 1990 — the FA Cup that year became his first trophy. First league title in 26 years in 1993, first Double in 1994. The 1999 Treble: the league on the final day, the FA Cup, and the Champions League 2–1 against Bayern, both goals in stoppage time. Moscow 2008: Champions League again, 6–5 on penalties over Chelsea. A 20th league title in 2013, then retirement — 38 honours, 1,500 matches.",
     photos: [
-      { src: '/photos/history/ferguson-1.jpg', caption: 'Alex Ferguson' },
-      { src: '/photos/history/ferguson-2.jpg', caption: 'Eric Cantona' },
-      { src: '/photos/history/ferguson-3.jpg', caption: 'Roy Keane' },
-      { src: '/photos/history/ferguson-4.jpg', caption: 'Cristiano Ronaldo' },
+      { src: 'photos/history/ferguson-1.jpg', caption: 'Alex Ferguson' },
+      { src: 'photos/history/ferguson-2.jpg', caption: 'Eric Cantona' },
+      { src: 'photos/history/ferguson-3.jpg', caption: 'Roy Keane' },
+      { src: 'photos/history/ferguson-4.jpg', caption: 'Cristiano Ronaldo' },
     ],
     items: [
       { type: 'headline', paper: '27 MAY 1999', text: 'THE TREBLE', x: 55, y: 20, rot: 2.4, z: 3 },
@@ -218,10 +218,10 @@ export const eras = [
     years: '2013–2026',
     body: 'Moyes. Van Gaal — FA Cup 2016. Mourinho — League Cup and Europa League 2017. Solskjaer. Rangnick. Ten Hag — League Cup 2023, FA Cup 2024. Amorim, sacked January 2026. Then Michael Carrick: interim from 13 January 2026, permanent from 22 May 2026 after finishing third with wins over City, Arsenal and Liverpool.',
     photos: [
-      { src: '/photos/history/post-ferguson-1.jpg', caption: 'David Moyes' },
-      { src: '/photos/history/post-ferguson-2.jpg', caption: 'José Mourinho' },
-      { src: '/photos/history/post-ferguson-3.jpg', caption: 'Marcus Rashford' },
-      { src: '/photos/history/post-ferguson-4.jpg', caption: 'Erik ten Hag' },
+      { src: 'photos/history/post-ferguson-1.jpg', caption: 'David Moyes' },
+      { src: 'photos/history/post-ferguson-2.jpg', caption: 'José Mourinho' },
+      { src: 'photos/history/post-ferguson-3.jpg', caption: 'Marcus Rashford' },
+      { src: 'photos/history/post-ferguson-4.jpg', caption: 'Erik ten Hag' },
     ],
     items: [
       { type: 'headline', paper: 'MAY 2026', text: 'CARRICK GETS THE JOB', x: 55, y: 21, rot: -2.2, z: 3 },
@@ -242,9 +242,9 @@ export const eras = [
     years: 'now',
     body: "Carrick's first full season in charge. The current age — new season, old faith. This one is being written week by week.",
     photos: [
-      { src: '/photos/history/now-1.jpg', caption: 'Michael Carrick' },
-      { src: '/photos/history/now-2.jpg', caption: 'Old Trafford today' },
-      { src: '/photos/history/now-3.jpg', caption: 'Bruno Fernandes' },
+      { src: 'photos/history/now-1.jpg', caption: 'Michael Carrick' },
+      { src: 'photos/history/now-2.jpg', caption: 'Old Trafford today' },
+      { src: 'photos/history/now-3.jpg', caption: 'Bruno Fernandes' },
     ],
     items: [
       { type: 'headline', paper: 'AUGUST 2026', text: 'A NEW ERA KICKS OFF', x: 49, y: 22, rot: 2.2, z: 3 },

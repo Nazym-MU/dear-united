@@ -4,8 +4,6 @@ dist-ssr/
 *.local
 .claude/
 
-public/models/old-trafford.glb
-
 # environments
 .env
 .env.*

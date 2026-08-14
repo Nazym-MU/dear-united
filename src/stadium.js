@@ -165,11 +165,11 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
   const camLook = CENTER.clone()
 
   const dracoLoader = new DRACOLoader()
-  dracoLoader.setDecoderPath('/draco/')
+  dracoLoader.setDecoderPath('draco/')
   const loader = new GLTFLoader()
   loader.setDRACOLoader(dracoLoader)
 
-  loader.load('/models/old-trafford.glb',
+  loader.load('models/old-trafford.glb',
     (gltf) => {
       scene.add(gltf.scene)
       scene.updateMatrixWorld(true)

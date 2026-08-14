@@ -152,7 +152,9 @@ if (prefersReduced) {
     : new Promise((r) => window.addEventListener('load', r, { once: true }))
   const fontsReady = winLoad.then(() => Promise.all([
     document.fonts?.load?.('1rem "Homemade Apple"'),
+    document.fonts?.load?.('600 1rem "Nunito"'),
     document.fonts?.load?.('700 1rem "Nunito"'),
+    document.fonts?.load?.('800 1rem "Nunito"'),
     document.fonts?.ready,
   ]))
   Promise.race([

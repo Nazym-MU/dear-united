@@ -45,7 +45,7 @@ function playerCard(p) {
       <div class="pcard-photo">
         <div class="monogram">${initials(p.name)}</div>
         ${p.captain ? '<span class="capt-chip">C</span>' : ''}
-        <img src="/photos/players/${p.slug}.jpg" alt="${p.name}" loading="lazy" />
+        <img src="photos/players/${p.slug}.jpg" alt="${p.name}" loading="lazy" />
       </div>
       <div class="pcard-name" title="${p.name}">${surname(p.name)}</div>
     </article>`
@@ -57,7 +57,7 @@ function managerCard(m) {
       <span class="manager-tag">Manager</span>
       <div class="pcard-photo">
         <div class="monogram">${initials(m.name)}</div>
-        <img src="/photos/players/${m.slug}.jpg" alt="${m.name}" loading="lazy" />
+        <img src="photos/players/${m.slug}.jpg" alt="${m.name}" loading="lazy" />
       </div>
       <div class="pcard-name">${m.name}</div>
     </article>`
@@ -92,7 +92,7 @@ function squadChip(p) {
     <div class="squad-chip" title="${p.name}">
       <span class="squad-chip-photo">
         <span class="monogram">${initials(p.name)}</span>
-        <img src="/photos/players/${p.slug}.jpg" alt="${p.name}" loading="lazy" />
+        <img src="photos/players/${p.slug}.jpg" alt="${p.name}" loading="lazy" />
       </span>
       <span class="squad-chip-meta">
         <span class="squad-chip-name">${chipName(p.name)}</span>
@@ -119,7 +119,7 @@ function leftPage(season) {
       <div class="kit-block">
         <div class="kit-media">
           ${jerseySvg(season.kit)}
-          <img src="/photos/kits/${season.slug}.png" alt="${season.title} home kit" loading="lazy" />
+          <img src="photos/kits/${season.slug}.png" alt="${season.title} home kit" loading="lazy" />
         </div>
         <p class="kit-caption">${kitCaption}</p>
       </div>
@@ -152,7 +152,7 @@ function rightPage(season) {
 function coverPage() {
   return `
     <div class="cover-inner">
-      <img class="cover-crest" src="/crest.png" alt="Manchester United crest" />
+      <img class="cover-crest" src="crest.png" alt="Manchester United crest" />
       <h1 class="cover-title">Player Album</h1>
       <div class="cover-rule"></div>
       <p class="cover-club">Manchester United</p>

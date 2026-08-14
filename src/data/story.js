@@ -33,8 +33,8 @@ export const chapters = [
     side: 'left',
     camera: { position: [0.10, 0.62, 0.16], lookAt: [0.04, 0.06, 0.10] },
     photos: [
-      { src: '/photos/ground-1.jpg', caption: 'From above', rot: -4 },
-      { src: '/photos/ground-2.jpg', caption: '1910', rot: 3 },
+      { src: 'photos/ground-1.jpg', caption: 'From above', rot: -4 },
+      { src: 'photos/ground-2.jpg', caption: '1910', rot: 3 },
     ],
   },
   {
@@ -49,8 +49,8 @@ export const chapters = [
     side: 'right',
     camera: { position: [0.62, 0.28, 0.12], lookAt: [0.04, 0.06, 0.10] },
     photos: [
-      { src: '/photos/east-1.jpg', caption: 'The Munich clock', rot: 5 },
-      { src: '/photos/east-2.jpg', caption: 'The Trinity', rot: -3 },
+      { src: 'photos/east-1.jpg', caption: 'The Munich clock', rot: 5 },
+      { src: 'photos/east-2.jpg', caption: 'The Trinity', rot: -3 },
     ],
   },
   {
@@ -65,8 +65,8 @@ export const chapters = [
     side: 'left',
     camera: { position: [0.12, 0.26, -0.54], lookAt: [0.04, 0.07, 0.10] },
     photos: [
-      { src: '/photos/stretford-1.jpg', caption: 'The old terrace', rot: -5 },
-      { src: '/photos/stretford-2.jpg', caption: 'Full voice', rot: 2 },
+      { src: 'photos/stretford-1.jpg', caption: 'The old terrace', rot: -5 },
+      { src: 'photos/stretford-2.jpg', caption: 'Full voice', rot: 2 },
     ],
   },
   {
@@ -81,8 +81,8 @@ export const chapters = [
     side: 'right',
     camera: { position: [-0.54, 0.28, 0.10], lookAt: [0.04, 0.06, 0.10] },
     photos: [
-      { src: '/photos/saf-1.jpg', caption: 'The statue', rot: 4 },
-      { src: '/photos/saf-2.jpg', caption: 'May 2013, the last one', rot: -2 },
+      { src: 'photos/saf-1.jpg', caption: 'The statue', rot: 4 },
+      { src: 'photos/saf-2.jpg', caption: 'May 2013, the last one', rot: -2 },
     ],
   },
   {
@@ -97,8 +97,8 @@ export const chapters = [
     side: 'left',
     camera: { position: [0.12, 0.26, 0.64], lookAt: [0.04, 0.06, 0.10] },
     photos: [
-      { src: '/photos/bobby-1.jpg', caption: 'Sir Bobby', rot: -4 },
-      { src: '/photos/bobby-2.jpg', caption: 'The tunnel', rot: 3 },
+      { src: 'photos/bobby-1.jpg', caption: 'Sir Bobby', rot: -4 },
+      { src: 'photos/bobby-2.jpg', caption: 'The tunnel', rot: 3 },
     ],
   },
   {
@@ -113,8 +113,8 @@ export const chapters = [
     side: 'right',
     camera: { position: [0.30, 0.07, 0.40], lookAt: [0.04, 0.13, 0.02] },
     photos: [
-      { src: '/photos/pitch-1.jpg', caption: 'Matchday surface', rot: 3 },
-      { src: '/photos/pitch-2.jpg', caption: 'Under the lights', rot: -5 },
+      { src: 'photos/pitch-1.jpg', caption: 'Matchday surface', rot: 3 },
+      { src: 'photos/pitch-2.jpg', caption: 'Under the lights', rot: -5 },
     ],
   },
 ]

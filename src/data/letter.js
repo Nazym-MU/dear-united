@@ -6,9 +6,10 @@ export const letter = {
 
   salutation: 'Dear United,',
   paragraphs: [
-    'Write whatever you like here. Each string in this array becomes a paragraph, set in the handwriting face, and the page will grow to fit however much you write.',
-    'Replace this placeholder with the real thing when you are ready — the letter is the first thing anyone sees, so it is worth taking your time over.',
+    'I became a fan at eleven, with no idea how much you would come to shape my life. You are my way of life, my love, my joy and my heartbreak, my muse and my energy. Thank you for always being by my side.',
+    'My dream is to visit Old Trafford with my dad. Scroll down a little and you\'ll see a model I made. The Lego set no longer exists, so I rebuilt it from scratch, modeling each brick and assembling them one by one, about 100 hours of work.',
+    'I love you!',
   ],
   signoff: 'Yours,',
-  signature: 'A supporter',
+  signature: '@nazym_manutd',
 }
