@@ -66,15 +66,7 @@ function sizeSheet() {
 
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-let ticking = false
-
-function render() {
-  ticking = false
-
-  const trackTop = scrollEl.offsetTop
-  const trackLen = scrollEl.offsetHeight - window.innerHeight
-  const p = trackLen > 0 ? clamp01((window.scrollY - trackTop) / trackLen) : 0
-
+function render(p) {
   const f = ease(phase(p, PHASES.flap))
   envelopeEl.style.setProperty('--flap-angle', `${(f * 190).toFixed(2)}deg`)
   envelopeEl.style.setProperty('--seal-opacity', (1 - ease(clamp01((f - 0.3) / 0.17))).toFixed(3))
@@ -97,15 +89,38 @@ function render() {
   stageEl.style.setProperty('--wrap-offset', `${Math.round(wrapTop)}px`)
 }
 
-function onScroll() {
-  if (ticking) return
-  ticking = true
-  requestAnimationFrame(render)
+// Scroll wheels and flicked momentum deliver the scroll position in coarse
+// steps; rendering straight from scroll events makes the flap and sheet move
+// in visible jumps. A continuous loop instead eases a smoothed progress
+// toward the live scroll position every frame, so steps become glides.
+let curP = 0
+let renderedP = -1
+let prevT = performance.now()
+
+function targetP() {
+  const trackTop = scrollEl.offsetTop
+  const trackLen = scrollEl.offsetHeight - window.innerHeight
+  return trackLen > 0 ? clamp01((window.scrollY - trackTop) / trackLen) : 0
+}
+
+function frame() {
+  requestAnimationFrame(frame)
+  const now = performance.now()
+  const dt = Math.min((now - prevT) / 1000, 0.05)
+  prevT = now
+  const target = targetP()
+  curP = target + (curP - target) * Math.pow(0.00002, dt)   // ~90ms settle
+  if (Math.abs(curP - target) < 0.0004) curP = target
+  if (curP !== renderedP) {
+    render(curP)
+    renderedP = curP
+  }
 }
 
 function onResize() {
   sizeSheet()
-  render()
+  render(curP)
+  renderedP = curP
 }
 
 // The envelope is measured with fallback fonts first and again once the real
@@ -141,9 +156,9 @@ if (prefersReduced) {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
   window.scrollTo(0, 0)
   sizeSheet()
-  window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onResize)
-  render()
+  render(0)
+  requestAnimationFrame(frame)
   // Safari's fonts.ready/fonts.load can resolve before faces actually render
   // (a long-standing WebKit bug), so the gate measures instead: a hidden
   // probe is laid out in a fallback font, switched to the real face, and
