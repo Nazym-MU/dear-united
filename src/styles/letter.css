@@ -63,9 +63,11 @@ body.letter-page {
   width: min(680px, 94vw);
   perspective: 1700px;
   perspective-origin: 50% 40%;
-  margin-top: var(--wrap-offset, 34vh);
-  transform: scale(var(--stage-scale, 1));
+  /* The offset rides in the transform, not margin-top — animating margin
+     forces layout every scroll frame, which is what stuttered on phones. */
+  transform: translateY(var(--wrap-offset, 34vh)) scale(var(--stage-scale, 1));
   transform-origin: 50% 0;
+  will-change: transform;
 }
 
 #envelope {
@@ -302,6 +304,7 @@ body.letter-page {
 
 .env-seal {
   position: absolute;
+  will-change: opacity;
   left: 50%;
   top: 100%;
   width: 15.5%;
@@ -349,6 +352,7 @@ body.letter-page {
   left: 50%;
   bottom: 0;
   z-index: 2;
+  will-change: transform;
   width: 94%;
   height: var(--sheet-h, 500px);
   transform: translateX(-50%) translateY(var(--sheet-y, 0px));

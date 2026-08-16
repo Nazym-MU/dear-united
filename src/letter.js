@@ -144,21 +144,43 @@ if (prefersReduced) {
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onResize)
   render()
-  // fonts.load()/fonts.ready lie if the Google Fonts stylesheet hasn't been
-  // applied yet, so first wait for window load (all stylesheets parsed),
-  // then for the faces themselves; 3s cap so a hung font can't strand us.
+  // Safari's fonts.ready/fonts.load can resolve before faces actually render
+  // (a long-standing WebKit bug), so the gate measures instead: a hidden
+  // probe is laid out in a fallback font, switched to the real face, and
+  // polled until its width changes — proof the face is painting. The probe
+  // also forces the face to start downloading. 2.6s cap per face.
+  function fontSettled(family, weight) {
+    return new Promise((resolve) => {
+      const probe = document.createElement('span')
+      probe.textContent = 'MU Old Trafford 1878 wm'
+      probe.style.cssText =
+        'position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font-size:48px;font-family:monospace'
+      probe.style.fontWeight = weight
+      document.body.appendChild(probe)
+      const base = probe.offsetWidth
+      probe.style.fontFamily = `"${family}", monospace`
+      const t0 = performance.now()
+      ;(function check() {
+        if (probe.offsetWidth !== base || performance.now() - t0 > 2600) {
+          probe.remove()
+          resolve()
+        } else {
+          setTimeout(check, 40)
+        }
+      })()
+    })
+  }
+
   const winLoad = document.readyState === 'complete'
     ? Promise.resolve()
     : new Promise((r) => window.addEventListener('load', r, { once: true }))
-  const fontsReady = winLoad.then(() => Promise.all([
-    document.fonts?.load?.('1rem "Homemade Apple"'),
-    document.fonts?.load?.('600 1rem "Nunito"'),
-    document.fonts?.load?.('700 1rem "Nunito"'),
-    document.fonts?.load?.('800 1rem "Nunito"'),
-    document.fonts?.ready,
-  ]))
-  Promise.race([
-    fontsReady,
-    new Promise((r) => setTimeout(r, 3000)),
-  ]).then(reveal, reveal)
+  winLoad
+    .then(() => Promise.all([
+      fontSettled('Homemade Apple', '400'),
+      fontSettled('Nerko One', '400'),
+      fontSettled('Nunito', '600'),
+      fontSettled('Nunito', '700'),
+      fontSettled('Nunito', '800'),
+    ]))
+    .then(reveal, reveal)
 }
