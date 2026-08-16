@@ -42,7 +42,10 @@ const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
 
 export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = true }) {
   const renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: false, powerPreference: 'high-performance' })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+  // Touch devices get a lower render resolution — a dpr-3 phone framebuffer
+  // plus the model's textures is exactly the memory mix that crashes Safari.
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, coarsePointer ? 1.1 : 1.5))
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setClearColor(0x0d0c0a, 1)
 
@@ -171,6 +174,7 @@ export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = 
 
   loader.load('models/old-trafford.glb',
     (gltf) => {
+      dracoLoader.dispose()   // free the decoder workers' WASM memory
       scene.add(gltf.scene)
       scene.updateMatrixWorld(true)
 
