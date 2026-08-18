@@ -20,4 +20,4 @@ coverage/
 *.log
 npm-debug.log*
 
-scripts/.photo-cache.json
+scripts/.photo-cache*.json
