@@ -44,48 +44,53 @@
       }
       #mobile-note {
         position: fixed;
-        inset: 0;
+        left: 50%;
+        bottom: calc(18px + env(safe-area-inset-bottom));
+        transform: translateX(-50%);
         z-index: 1001;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        padding: 0 18px calc(26px + env(safe-area-inset-bottom));
-        background: rgba(13, 12, 10, 0.55);
+        width: max-content;
+        max-width: calc(100vw - 32px);
       }
       #mobile-note[hidden] { display: none; }
       .mobile-note-card {
-        max-width: 430px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         background: #1a1815;
-        border: 1.5px solid rgba(233, 227, 214, 0.2);
-        border-radius: 16px;
-        padding: 20px 22px 18px;
-        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(233, 227, 214, 0.2);
+        border-radius: 12px;
+        padding: 10px 12px 10px 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         color: #e9e3d6;
         font-family: -apple-system, 'Segoe UI', sans-serif;
       }
       .mobile-note-card p {
-        margin: 0 0 14px;
-        font-size: 15px;
-        line-height: 1.55;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
       }
-      .mobile-note-card strong { color: #d97a72; }
       #mobile-note-btn {
-        width: 100%;
-        padding: 12px 0;
-        font: 700 15px -apple-system, 'Segoe UI', sans-serif;
-        color: #e9e3d6;
-        background: rgba(200, 99, 92, 0.16);
-        border: 1.5px solid rgba(200, 99, 92, 0.55);
-        border-radius: 999px;
+        flex: none;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        line-height: 1;
+        color: rgba(233, 227, 214, 0.7);
+        background: none;
+        border: none;
         cursor: pointer;
+        padding: 0;
       }
     </style>
   </head>
   <body class="letter-page">
     <div id="mobile-note" hidden>
-      <div class="mobile-note-card" role="alertdialog" aria-label="Device notice">
-        <p><strong>A small note</strong> — this experience is designed for a laptop, where it is at its smoothest. It works here too, just a little more modestly.</p>
-        <button id="mobile-note-btn" type="button">Continue anyway</button>
+      <div class="mobile-note-card">
+        <p>This experience is better on a laptop.</p>
+        <button id="mobile-note-btn" type="button" aria-label="Close">&times;</button>
       </div>
     </div>
     <script>
