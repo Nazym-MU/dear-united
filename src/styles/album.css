@@ -817,3 +817,30 @@ body.album-page::before {
     transition-duration: 0.01s;
   }
 }
+
+
+/* Flat mode (touch devices): no 3D — WebKit's backface handling on iPad
+   paints mirrored ghost pages. Only the two live faces are shown. */
+.book.flat .sheet,
+.book.flat .face.back {
+  transition: none !important;
+  transform: none !important;
+  transform-style: flat;
+}
+
+.book.flat .sheet .face {
+  visibility: hidden;
+}
+
+.book.flat .sheet.cur-right .face.front {
+  visibility: visible;
+}
+
+.book.flat .sheet.cur-left {
+  transform: translateX(-100%) !important;
+}
+
+.book.flat .sheet.cur-left .face.back {
+  visibility: visible;
+  border-radius: 10px 0 0 10px;
+}

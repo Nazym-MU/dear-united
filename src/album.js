@@ -14,6 +14,12 @@ const RIFFLE_MAX = 8
 const RIFFLE_STAGGER = 70
 
 const book = document.getElementById('book')
+
+// iPadOS/iOS WebKit renders 3D backfaces it should hide, so touch devices
+// get a flat book: pages switch instantly, no rotateY anywhere.
+const FLAT = window.matchMedia('(pointer: coarse)').matches ||
+  (navigator.maxTouchPoints > 1 && /iPad|Macintosh/.test(navigator.userAgent))
+if (FLAT) book.classList.add('flat')
 const shift = document.getElementById('book-shift')
 const scaleWrap = document.getElementById('book-scale')
 const stage = document.getElementById('album-stage')
@@ -298,6 +304,12 @@ function applyZ() {
 
 function render() {
   sheetEls.forEach((el, i) => el.classList.toggle('flipped', i < flips))
+  if (FLAT) {
+    sheetEls.forEach((el, i) => {
+      el.classList.toggle('cur-left', i === flips - 1)
+      el.classList.toggle('cur-right', i === flips)
+    })
+  }
   book.classList.toggle('closed', flips === 0)
   shift.classList.toggle('centered-cover', flips === 0)
   hotLeft.hidden = flips === 0
@@ -313,6 +325,11 @@ function render() {
 }
 
 function settle(sheet) {
+  if (FLAT) {
+    applyZ()
+    ensureWindow(flips)
+    return
+  }
   animating = true
   const done = () => {
     sheet.removeEventListener('transitionend', done)
@@ -357,6 +374,13 @@ function goToSeason(i) {
 }
 
 function jumpTo(target) {
+  if (FLAT) {
+    ensureWindow(target)
+    flips = target
+    render()
+    applyZ()
+    return
+  }
   animating = true
   const from = flips
   const dir = target > from ? 1 : -1
