@@ -14,7 +14,7 @@ export const PRETTY = {
 
 const _v = new THREE.Vector3()
 
-export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo, onBack } = {}) {
+export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo, onBack, onHoldAction } = {}) {
   const bar = document.createElement('div')
   bar.className = 'lego-bar'
   bar.innerHTML = `
@@ -22,7 +22,45 @@ export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo,
     <div class="lego-actions">
       <button class="lego-chip lego-reset-bricks" type="button" hidden>Reset bricks</button>
       <button class="lego-chip lego-reset-view" type="button">Reset view</button>
+      <button class="lego-chip lego-help-btn" type="button" aria-label="How to play">?</button>
     </div>`
+  const coarse = window.matchMedia('(pointer: coarse)').matches
+  const help = document.createElement('aside')
+  help.className = 'lego-help'
+  help.setAttribute('aria-hidden', 'true')
+  help.innerHTML = coarse
+    ? `
+    <div class="lego-help-head"><span>HOW TO PLAY</span><button class="lego-help-close" type="button" aria-label="Close">✕</button></div>
+    <dl class="lego-help-list">
+      <dt>Drag</dt><dd>turn the stadium</dd>
+      <dt>Pinch</dt><dd>zoom · two fingers slide</dd>
+      <dt>Double-tap</dt><dd>zoom in on a spot</dd>
+      <dt>Tap a brick</dt><dd>lift it, drag to carry, tap to drop</dd>
+      <dt>While holding</dt><dd>buttons appear to rotate, raise, lower or put it back</dd>
+      <dt>Reset bricks</dt><dd>rebuilds the stadium</dd>
+    </dl>`
+    : `
+    <div class="lego-help-head"><span>HOW TO PLAY</span><button class="lego-help-close" type="button" aria-label="Close">✕</button></div>
+    <dl class="lego-help-list">
+      <dt>Drag</dt><dd>turn the stadium</dd>
+      <dt>Scroll</dt><dd>zoom · right-drag slides · WASD flies</dd>
+      <dt>Double-click</dt><dd>zoom in on a spot</dd>
+      <dt>Click a brick</dt><dd>lift it, move the mouse to carry it, click to drop</dd>
+      <dt>R</dt><dd>rotate the brick you're holding</dd>
+      <dt>Scroll</dt><dd>raise or lower it, one plate at a time</dd>
+      <dt>Esc</dt><dd>put it back where it was</dd>
+      <dt>Reset bricks</dt><dd>rebuilds the whole stadium</dd>
+    </dl>`
+  const hold = document.createElement('div')
+  hold.className = 'lego-hold'
+  hold.setAttribute('aria-hidden', 'true')
+  hold.innerHTML = `
+    <span class="lego-hold-label">HOLDING A BRICK</span>
+    <button class="lego-mono-btn" data-act="rotate" type="button">↻ Rotate${coarse ? '' : ' (R)'}</button>
+    <button class="lego-mono-btn" data-act="up" type="button">▲ Raise</button>
+    <button class="lego-mono-btn" data-act="down" type="button">▼ Lower</button>
+    <button class="lego-mono-btn" data-act="drop" type="button">Drop${coarse ? '' : ' (click)'}</button>
+    <button class="lego-mono-btn" data-act="cancel" type="button">Put back${coarse ? '' : ' (Esc)'}</button>`
   const tagsEl = document.createElement('div')
   tagsEl.className = 'lego-tags'
   tagsEl.setAttribute('aria-label', 'Stands')
@@ -42,7 +80,7 @@ export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo,
       </div>
     </div>`
   // tags sit under the bar and the card so those always win clicks
-  root.append(tagsEl, card, bar)
+  root.append(tagsEl, card, hold, help, bar)
 
   const q = (el, sel) => el.querySelector(sel)
   const resetBricksBtn = q(bar, '.lego-reset-bricks')
@@ -55,7 +93,27 @@ export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo,
   q(card, '.lego-card-close').addEventListener('click', () => closeCard())
   q(card, '.lego-card-fly').addEventListener('click', () => active && onFlyTo?.(active))
   // keep clicks on the chrome from reaching the canvas' fly controls
-  for (const el of [bar, card]) el.addEventListener('pointerdown', (e) => e.stopPropagation())
+  for (const el of [bar, card, help, hold]) el.addEventListener('pointerdown', (e) => e.stopPropagation())
+  q(bar, '.lego-help-btn').addEventListener('click', () => (help.classList.contains('open') ? closeHelp() : openHelp()))
+  q(help, '.lego-help-close').addEventListener('click', () => closeHelp(true))
+  hold.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-act]')
+    if (b) onHoldAction?.(b.dataset.act)
+  })
+
+  const HELP_KEY = 'dear-united:lego-help-seen'
+  function openHelp() { help.classList.add('open'); help.setAttribute('aria-hidden', 'false') }
+  function closeHelp(remember = false) {
+    help.classList.remove('open'); help.setAttribute('aria-hidden', 'true')
+    if (remember) { try { localStorage.setItem(HELP_KEY, '1') } catch { /* private mode */ } }
+  }
+  /** Show the how-to once per browser; the ? chip reopens it any time. */
+  function showHelpOnce() {
+    let seen = false
+    try { seen = localStorage.getItem(HELP_KEY) === '1' } catch { /* ignore */ }
+    if (!seen) openHelp()
+  }
+  function setHolding(v) { hold.classList.toggle('open', !!v); hold.setAttribute('aria-hidden', v ? 'false' : 'true') }
 
   /**
    * list: [{ key, label0, position, centroid, count, onClick?, label?() }]
@@ -133,5 +191,5 @@ export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo,
     resetBricksBtn.textContent = `Reset bricks (${n})`
   }
 
-  return { setTags, pushTag, updateTags, openCard, closeCard, setMovedCount, el: { bar, tags: tagsEl, card } }
+  return { setTags, pushTag, updateTags, openCard, closeCard, setMovedCount, openHelp, closeHelp, showHelpOnce, setHolding, el: { bar, tags: tagsEl, card, help, hold } }
 }

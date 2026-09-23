@@ -108,3 +108,38 @@
   #stadium-live .lego-chip { padding: 4px 6px; font-size: 10px; }
   #stadium-live #stadium-hint { font-size: 10px; }
 }
+
+/* ── how-to card (shown once, reopened with the ? chip) ── */
+#stadium-live .lego-help {
+  position: absolute; right: 14px; top: calc(var(--lg-bar-h) + 12px); z-index: 21;
+  width: min(340px, calc(100% - 28px)); background: rgba(239, 233, 220, 0.97); color: var(--lg-ink);
+  border: 1px solid var(--lg-ink); box-shadow: 3px 3px 0 rgba(31, 36, 55, 0.35);
+  font-family: var(--lg-sys); opacity: 0; transform: translateY(-6px); pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+#stadium-live .lego-help.open { opacity: 1; transform: none; pointer-events: auto; }
+#stadium-live .lego-help-head {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--lg-ink); color: var(--lg-paper); font-family: var(--lg-mono); font-size: 11px; letter-spacing: 0.12em;
+  padding: 8px 10px 8px 12px;
+}
+#stadium-live .lego-help-close { background: none; border: 0; color: inherit; font-size: 13px; padding: 0 2px; }
+#stadium-live .lego-help-list { display: grid; grid-template-columns: auto 1fr; gap: 7px 12px; margin: 0; padding: 12px 14px 14px; font-size: 13px; line-height: 1.35; }
+#stadium-live .lego-help-list dt { font-family: var(--lg-mono); font-size: 11px; letter-spacing: 0.04em; padding: 2px 6px; border: 1px solid var(--lg-ink); background: #fff; white-space: nowrap; align-self: start; }
+#stadium-live .lego-help-list dd { margin: 0; align-self: center; }
+
+/* ── toolbar while holding a brick ── */
+#stadium-live .lego-hold {
+  position: absolute; left: 50%; bottom: clamp(4.4rem, 9vh, 6.2rem); transform: translate(-50%, 8px); z-index: 21;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
+  padding: 6px 8px; background: rgba(239, 233, 220, 0.96); border: 1px solid var(--lg-ink);
+  box-shadow: 3px 3px 0 rgba(31, 36, 55, 0.35); opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease; max-width: calc(100% - 24px);
+}
+#stadium-live .lego-hold.open { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+#stadium-live .lego-hold-label { font-family: var(--lg-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--lg-ink); margin: 0 4px; }
+#stadium-live.assembled .lego-hold.open ~ #stadium-hint { opacity: 0; }
+@media (max-width: 560px) {
+  #stadium-live .lego-hold-label { display: none; }
+  #stadium-live .lego-hold { bottom: 8rem; }
+}

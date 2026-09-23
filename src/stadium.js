@@ -218,6 +218,7 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
     onAssemblyDone?.()
     enableOrbit()
     loadWall()
+    setTimeout(() => ui?.showHelpOnce(), 1200)
   }
 
   // ── Interactive mode ────────────────────────────────────────────────────────
@@ -241,6 +242,8 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
     interaction = new BrickInteraction(bricks, {
       onChange: (what) => {
         ui.setMovedCount(bricks.moved.size)
+        ui.setHolding(what === 'lift' || what === 'rotate')
+        if (what === 'lift') ui.closeHelp()
         if (what === 'lift') playSound('lift')
         else if (what === 'drop' || what === 'cancel') playSound('snap')
         else if (what === 'rotate') playSound('tick')
@@ -255,6 +258,14 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
       onResetView: () => controls.flyTo(...homeView(), 900),
       onResetBricks: () => { interaction.cancel(); bricks.resetAll(); ui.setMovedCount(0) },
       onFlyTo: (tag) => flyToTag(tag),
+      onHoldAction: (act) => {
+        raycaster.setFromCamera(pointer.ndc, camera)
+        if (act === 'rotate') interaction.rotate(raycaster.ray)
+        else if (act === 'up') interaction.wheel(-1)
+        else if (act === 'down') interaction.wheel(1)
+        else if (act === 'drop') interaction.click(raycaster.ray)
+        else if (act === 'cancel') interaction.cancel()
+      },
     })
     const cents = bricks.groupCentroids()
     ui.setTags(
