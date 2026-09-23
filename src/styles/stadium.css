@@ -1,0 +1,110 @@
+/* LEGO stadium chrome inside #stadium-live: top bar, name tags, info card, cursors.
+   Adapted from the lego-trafford engine's styles.css; every rule is scoped to the
+   section and the variables are prefixed (--lg-*) so the letter page's own
+   --ink / --paper / --sans keep winning everywhere else. */
+@import '../lego/wall/wall.css';
+
+#stadium-live {
+  --lg-bar: #000;
+  --lg-sky: #1c2338;
+  --lg-ink: #1f2437;
+  --lg-paper: #efe9dc;
+  --lg-glow: #ffd27a;
+  --lg-mono: "SF Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+  --lg-serif: Georgia, "Times New Roman", serif;
+  --lg-sys: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --lg-bar-h: 44px;
+}
+
+#stadium-live button:where(:not([class^="wall-"])) { font: inherit; color: inherit; cursor: pointer; }
+
+/* ── canvas cursors (fly controls) ── */
+#stadium-live.assembled #stadium-canvas { cursor: grab; }
+#stadium-live.assembled #stadium-canvas:active { cursor: grabbing; }
+#stadium-live #stadium-canvas.over-brick { cursor: pointer; }
+#stadium-live #stadium-canvas.holding { cursor: move; }
+
+/* ── top bar ── */
+#stadium-live .lego-bar {
+  position: absolute; inset: 0 0 auto 0; height: var(--lg-bar-h); z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 0 12px; background: rgba(0, 0, 0, 0.82); border-bottom: 1px solid #1b1b1b;
+  font-family: var(--lg-sys);
+}
+#stadium-live .lego-pill {
+  border: 1px solid #3a3a3a; background: #141414; border-radius: 999px;
+  padding: 5px 12px; font-size: 13px; line-height: 1.2; color: #e8e6e1; white-space: nowrap;
+}
+#stadium-live .lego-pill:hover { background: #222; }
+#stadium-live .lego-actions { display: flex; gap: 6px; }
+#stadium-live .lego-chip {
+  font-family: var(--lg-mono); font-size: 11px; letter-spacing: 0.02em; padding: 4px 9px; line-height: 1.3;
+  border: 1px solid #3a3a3a; background: #111; border-radius: 4px; color: #cfd2da; white-space: nowrap;
+}
+#stadium-live .lego-chip:hover { background: #222; color: #fff; }
+#stadium-live .lego-chip[hidden] { display: none; }
+
+/* ── in-world name tags ── */
+#stadium-live .lego-tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
+#stadium-live .lego-tag {
+  position: absolute; left: 0; top: 0; pointer-events: auto; white-space: nowrap;
+  font-family: var(--lg-mono); font-size: 11px; line-height: 1; color: var(--lg-ink);
+  background: rgba(239, 233, 220, 0.92); border: 1px solid var(--lg-ink); padding: 4px 6px;
+  transform-origin: 0 0; user-select: none; will-change: transform;
+  box-shadow: 2px 2px 0 rgba(31, 36, 55, 0.35);
+}
+#stadium-live .lego-tag::after { /* little leader tick */
+  content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 8px; background: var(--lg-ink);
+}
+#stadium-live .lego-tag:hover, #stadium-live .lego-tag.active { background: var(--lg-glow); }
+
+/* ── slide-in info card ── */
+#stadium-live .lego-card {
+  position: absolute; top: calc(var(--lg-bar-h) + 14px); left: 14px; width: min(320px, calc(100% - 28px));
+  max-height: calc(100% - var(--lg-bar-h) - 28px); overflow: auto;
+  background: var(--lg-paper); color: var(--lg-ink); border: 1px solid var(--lg-ink);
+  box-shadow: 4px 4px 0 rgba(31, 36, 55, 0.45);
+  transform: translateX(calc(-100% - 40px)); transition: transform 280ms cubic-bezier(.2,.8,.2,1);
+  z-index: 15;
+}
+#stadium-live .lego-card.open { transform: none; }
+#stadium-live .lego-card-img {
+  height: 130px; border-bottom: 1px solid var(--lg-ink); position: relative; overflow: hidden;
+  background:
+    repeating-linear-gradient(-35deg, rgba(31,36,55,0.16) 0 1px, transparent 1px 7px),
+    radial-gradient(120% 90% at 70% 110%, #ffd27a 0 8%, transparent 30%),
+    linear-gradient(180deg, #1c2338 0%, #2c3550 55%, #9aa5b8 56%, #c7ccd6 100%);
+}
+#stadium-live .lego-card-img-label {
+  position: absolute; left: 8px; bottom: 8px; font-family: var(--lg-mono); font-size: 10px;
+  background: var(--lg-paper); border: 1px solid var(--lg-ink); padding: 2px 5px;
+}
+#stadium-live .lego-card-body { padding: 12px 14px 14px; }
+#stadium-live .lego-card-kicker { font-family: var(--lg-mono); font-size: 10px; letter-spacing: 0.08em; color: #3d4460; margin: 0 0 6px; }
+#stadium-live .lego-card-title { font-family: var(--lg-serif); font-weight: 400; font-size: 24px; margin: 0 0 8px; line-height: 1.15; }
+#stadium-live .lego-card-text { font-family: var(--lg-serif); font-size: 15px; line-height: 1.45; margin: 0 0 10px; }
+#stadium-live .lego-card-meta { font-family: var(--lg-mono); font-size: 11px; line-height: 1.6; margin: 0 0 12px; color: #3d4460; }
+#stadium-live .lego-card-buttons { display: flex; gap: 6px; }
+#stadium-live .lego-mono-btn {
+  font-family: var(--lg-mono); font-size: 11px; padding: 4px 9px; background: transparent;
+  border: 1px solid var(--lg-ink); color: var(--lg-ink); border-radius: 2px;
+}
+#stadium-live .lego-mono-btn:hover { background: var(--lg-ink); color: var(--lg-paper); }
+
+/* hint line: engine look (mono, dark pill) over the section's own fade in/out */
+#stadium-live #stadium-hint {
+  font-family: var(--lg-mono); font-size: 11px; font-weight: 400; letter-spacing: 0.02em; text-transform: none;
+  color: rgba(239, 233, 220, 0.8); background: rgba(20, 24, 38, 0.6);
+  border: 1px solid rgba(239, 233, 220, 0.2); padding: 5px 9px; white-space: nowrap;
+  max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis; z-index: 3;
+}
+
+/* fan wall pieces live above the canvas and tags */
+#stadium-live .wall-ui { position: static; }
+#stadium-live #album-link { z-index: 5; }
+
+@media (max-width: 560px) {
+  #stadium-live .lego-pill { font-size: 12px; padding: 5px 10px; }
+  #stadium-live .lego-chip { padding: 4px 6px; font-size: 10px; }
+  #stadium-live #stadium-hint { font-size: 10px; }
+}

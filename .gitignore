@@ -21,3 +21,6 @@ coverage/
 npm-debug.log*
 
 scripts/.photo-cache*.json
+
+# screenshot harness output
+tools-shots/

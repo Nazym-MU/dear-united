@@ -1,388 +1,433 @@
+// The letter page's stadium: the ink-style LEGO Old Trafford (src/lego/), embedded in
+// #stadium-live. Bricks drop into place bottom-up in front of the home camera; once the
+// last one lands the visitor gets the engine's fly controls, can lift and carry bricks,
+// open stand cards, and add a brick to the fan wall.
+//
+// Contract used by src/united.js:
+//   initStadium(canvas, { onProgress, onAssemblyDone, autoStart, root })
+//     -> { start, setActive, hurryAssembly, enableOrbit, setPath, isAssembled }
+// (The asset fetch starts immediately; nothing drops until start().)
+//
+// src/stadium-classic.js is the previous GLB implementation, still used by stadium.html.
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import './styles/stadium.css'
+import { Bricks } from './lego/engine/bricks.js'
+import { BrickInteraction } from './lego/engine/interact.js'
+import { InkPipeline } from './lego/render/pipeline.js'
+import { createSky, createGround, createLights } from './lego/render/sky.js'
+import { SKY_HORIZON, inkColor } from './lego/render/palette.js'
+import { toonGradient } from './lego/render/materials.js'
+import { FlyControls } from './lego/controls.js'
+import { createUI, PRETTY } from './lego/ui.js'
+import { FanWall } from './lego/wall/wall.js'
+import { wallExtent } from './lego/wall/layout.js'
+import { mountWallUI } from './lego/wall/ui.js'
+import { listBricks } from './lego/wall/store.js'
+import { STANDS_INFO } from './data/stands-info.js'
 
-// Stand membership comes from the parent empties baked into the GLB — every
-// brick piece is parented under a "<collection>-root" node. Stadium
-// orientation: SAF stand = west, SBC = east, East-Stand = north (Munich/
-// trophy facade), Stretford = south. Field-root also holds the ground plate.
-const STAND_MESHES = {
-  east:  new Set(['SBC-stand-root']),
-  north: new Set(['East-Stand-root', 'Seats-East-Stand-root']),
-  west:  new Set(['SAF-stand-root']),
-  south: new Set(['Stretford-End-root', 'Stretford-End-seats-root']),
-  field: new Set(['Field-root']),
-}
-
-const ALWAYS_HIDDEN = new Set()
-
-// GLTFLoader runs names through PropertyBinding.sanitizeNodeName, which drops
-// '.', '[', ']', ':' and '/'. Multi-primitive meshes also gain '_1' suffixes.
-const norm = (name) => name.replace(/_\d+$/, '').replace(/[\s[\].:/]/g, '')
-
-const NORM_STANDS = {}
-for (const [stand, set] of Object.entries(STAND_MESHES)) {
-  for (const n of set) NORM_STANDS[norm(n)] = stand
-}
-const NORM_HIDDEN = new Set([...ALWAYS_HIDDEN].map(norm))
+const REAL_WORLD_LENGTH_M = 230 // the stadium's longest side reads as ~230 m
 
 // ── Assembly timing ──────────────────────────────────────────────────────────
-const ASSEMBLY_SPREAD = 4.6   // seconds over which pieces begin their drop
-const DROP_DURATION   = 1.0   // seconds each piece takes to fall
-const FADE_PORTION    = 0.3   // opacity ramps in during this first slice of a drop
+const ASSEMBLY_SPREAD = 4.6   // seconds over which bricks begin their drop (by height rank)
+const DROP_DURATION = 1.0     // seconds each brick takes to fall
+const JITTER = 0.18           // random extra delay per brick, seconds
+const DROP_HEIGHT = 0.12      // × scene radius
+const LEAD_IN = 0.3           // a beat before the first brick moves
+const HURRY = 3.5             // time scale after a tap
 
-const CENTER = new THREE.Vector3(0.04, 0.1, 0.1)
-
-function expDecay(cur, target, decay, dt) {
-  return target + (cur - target) * Math.pow(decay, dt)
+// ── Fan wall ─────────────────────────────────────────────────────────────────
+const WALL_WIDTH = 16         // bricks per row
+const WALL_GAP_STUDS = 4      // gap between the stadium footprint and the wall
+const WALL_STAGGER_MS = 110   // wall bricks drop one after another
+const WALL_LINEAR = {
+  red: [0.8, 0.001, 0.008],
+  white: [1, 1, 1],
+  black: [0, 0, 0],
+  gray: [0.2, 0.2, 0.2],
+  yellow: [0.67, 0.4, 0],
+  blue: [0.009, 0.058, 0.8],
+  green: [0.08, 0.34, 0.04],
+  beige: [0.91, 0.62, 0.22],
 }
 
-const smoothstep = (t) => t * t * (3 - 2 * t)
+// Home camera: corner 3/4 aerial (same direction as the engine's homeView()).
+const HOME_DIR = new THREE.Vector3(0.95, 0.44, 1.15).normalize()
+
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
+const _m = new THREE.Matrix4()
+const ZERO = new THREE.Matrix4().makeScale(0, 0, 0)
 
-export function initStadium(canvasEl, { onProgress, onAssemblyDone, autoStart = true }) {
-  const renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: false, powerPreference: 'high-performance' })
-  // Touch devices get a lower render resolution — a dpr-3 phone framebuffer
-  // plus the model's textures is exactly the memory mix that crashes Safari.
-  const coarsePointer = window.matchMedia('(pointer: coarse)').matches
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, coarsePointer ? 1.1 : 1.5))
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  renderer.setClearColor(0x0d0c0a, 1)
-
-  const scene  = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100)
-
-  scene.add(new THREE.AmbientLight(0xc8d4e8, 0.35))
-  const k1 = new THREE.DirectionalLight(0xfff8f0, 1.6);  k1.position.set(3, 6, 2);    scene.add(k1)
-  const k2 = new THREE.DirectionalLight(0xe8f0ff, 0.55); k2.position.set(-3, 4, -2);  scene.add(k2)
-  const fl = new THREE.DirectionalLight(0xffe8c0, 0.40); fl.position.set(0, 0.5, 4);  scene.add(fl)
-  const rl = new THREE.DirectionalLight(0xd0e8ff, 0.50); rl.position.set(-2, 2, -4);  scene.add(rl)
-  const gl = new THREE.PointLight(0xc5a55a, 0.20, 3, 2); gl.position.set(0.04, -0.05, 0.1); scene.add(gl)
-
-  // ── Camera path (set via setPath) ──────────────────────────────────────────
-  // Waypoints are stored in cylindrical coordinates around CENTER with the
-  // angle unwrapped, so interpolating between any two of them orbits the
-  // stadium instead of cutting through it.
-  let path = null          // [{ radius, theta, y, lookAt: Vector3, shift }]
-  let scrollU  = 0         // target position along the path, in waypoint units
-  let smoothU  = 0
-  let smoothShift = 0
-
-  // Explore-mode user offsets
-  let userFovOffset = 0
-  let userYawOffset = 0    // rotate slider
-  let exploreYaw = 0       // stand-button view preset
-  let smoothYaw = 0
-  let activeStand = 'all'
-
-  // Assembly state
-  let meshData = []        // { obj, stand, restY, curOpacity, delay, drop }
-  let assemblyStart = null
-  let assemblyDone  = false
-  let assemblyClock = -0.7 // scaled elapsed time; starts negative for a beat after the loader fades
-  let timeScale     = 1
-  let started       = autoStart   // embed mode holds the drop until the section scrolls into view
-  let active        = true        // false = section off-screen, skip rendering entirely
+export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = true, root } = {}) {
+  root = root || canvas.closest('section') || canvas.parentElement
+  const coarse = window.matchMedia('(pointer: coarse)').matches
+  // Touch devices get a lower render resolution: a dpr-3 phone framebuffer plus the
+  // MSAA/half-float targets is exactly the memory mix that crashes Safari.
+  const MAX_DPR = coarse ? 1.1 : 1.5
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  // Free-orbit mode (embed): drag rotates the ground itself, no scroll path.
-  let orbit = null         // { theta, pitch, radius, lookY, velTheta, velPitch, dragging }
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' })
+  renderer.autoClear = false
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR))
 
-  const R_MIN = 0.3
-  const R_MAX = 1.35
+  const scene = new THREE.Scene()
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.001, 100)
+  const bricks = new Bricks()
+
+  let model = null, box, center, radius, metresPerUnit, groundY
+  let pipeline = null, sky = null
+  let controls = null, interaction = null, ui = null
+  let wall = null, wallUI = null, wallTag = null
+  let started = autoStart
+  let active = true
+  let engaged = false        // section (nearly) fills the viewport: wheel + keys belong to the scene
+  let assembly = null        // running drop state
+  let assemblyDone = false
+  let timeScale = 1
+  let raf = 0, last = performance.now()
+
+  // ── Load ────────────────────────────────────────────────────────────────────
+  bricks.load('models/lego/', { onProgress: (p) => onProgress?.(p) }).then((m) => {
+    model = m
+    scene.add(bricks.root)
+    box = new THREE.Box3(new THREE.Vector3(...model.bounds.min), new THREE.Vector3(...model.bounds.max))
+    center = box.getCenter(new THREE.Vector3())
+    const size = box.getSize(new THREE.Vector3())
+    radius = size.length() / 2
+    metresPerUnit = REAL_WORLD_LENGTH_M / Math.max(size.x, size.z)
+
+    camera.near = radius * 0.0025
+    camera.far = radius * 80
+    camera.updateProjectionMatrix()
+
+    groundY = box.min.y - model.plate * 0.05
+    scene.add(createGround(groundY, radius * 60))
+    scene.add(createLights(center, radius))
+    scene.fog = new THREE.Fog(SKY_HORIZON.clone(), radius * 2.2, radius * 11)
+    sky = createSky(radius * 70)
+    pipeline = new InkPipeline(renderer, { scene, sky, camera, unit: model.unit })
+    onResize()
+    setView(...homeView())
+
+    prepareAssembly()
+    onProgress?.(1)
+    console.info(`[lego] ${model.source} model: ${model.count} bricks, ${bricks.drawCalls} instanced meshes, ${(bricks.triangles / 1e6).toFixed(2)}M triangles`)
+    window.__stadium = { THREE, scene, camera, bricks, model, get controls() { return controls }, get interaction() { return interaction }, get wall() { return wall }, get wallUI() { return wallUI }, get ui() { return ui }, homeView }
+    kick()
+  }).catch((err) => {
+    console.error('[lego] could not load the model', err)
+  })
+
+  // ── Camera ──────────────────────────────────────────────────────────────────
+  function homeView() {
+    const fit = radius / Math.sin(THREE.MathUtils.degToRad(camera.fov) / 2)
+    // 0.72 frames a 16:10 screen; portrait fits the footprint to ~90% of the width instead
+    const dist = fit * (camera.aspect < 1 ? 0.83 / Math.max(camera.aspect, 0.4) : 0.72)
+    const target = center.clone().setY(box.min.y + (box.max.y - box.min.y) * 0.3)
+    return [target.clone().addScaledVector(HOME_DIR, dist), target]
+  }
+
+  function setView(pos, target) {
+    if (controls) { controls.setView(pos, target); return }
+    camera.position.copy(pos)
+    camera.lookAt(target)
+  }
+
+  function flyToTag(tag) {
+    const c = tag.centroid
+    const out = new THREE.Vector3(c.x - center.x, 0, c.z - center.z)
+    if (out.lengthSq() < 1e-8) out.set(1, 0, 1)
+    out.normalize()
+    // stand on the far side of the pitch, looking at the stand
+    const pos = center.clone().addScaledVector(out, -radius * 0.45).setY(box.max.y * 0.9 + radius * 0.12)
+    controls.flyTo(pos, new THREE.Vector3(c.x, c.y + radius * 0.02, c.z), 1100)
+  }
+
+  // ── Assembly ────────────────────────────────────────────────────────────────
+  // Bricks sorted by the bottom of their world AABB; start delays spread over
+  // ASSEMBLY_SPREAD by height rank, so the ground goes in first and roofs last.
+  function prepareAssembly() {
+    const n = bricks.count
+    const rank = Array.from({ length: n }, (_, i) => i)
+    rank.sort((a, b) => bricks.aabb[6 * a + 1] - bricks.aabb[6 * b + 1])
+    const delay = new Float32Array(n)
+    rank.forEach((bi, r) => { delay[bi] = (r / Math.max(1, n - 1)) * ASSEMBLY_SPREAD + Math.random() * JITTER })
+    const sorted = Int32Array.from(rank).sort((a, b) => delay[a] - delay[b])
+    assembly = { delay, sorted, next: 0, flying: [], clock: -LEAD_IN, h: DROP_HEIGHT * radius, dirty: new Set() }
+    // hide everything; falling bricks can leave their mesh's bounding sphere, so no culling meanwhile
+    for (const mesh of bricks.meshes) {
+      for (let k = 0; k < mesh.count; k++) mesh.setMatrixAt(k, ZERO)
+      mesh.instanceMatrix.needsUpdate = true
+      mesh.frustumCulled = false
+    }
+    if (started) beginAssembly()
+  }
+
+  function beginAssembly() {
+    if (!assembly || assembly.begun) return
+    assembly.begun = true
+    if (reducedMotion) {
+      for (let i = 0; i < bricks.count; i++) placeBrick(i, 0)
+      flushDirty()
+      finishAssembly()
+    }
+    kick()
+  }
+
+  function placeBrick(i, dy) {
+    const mesh = bricks.meshes[bricks.brickMesh[i]]
+    bricks.getOriginal(i, _m)
+    _m.elements[13] += dy
+    mesh.setMatrixAt(bricks.brickLocal[i], _m)
+    assembly.dirty.add(mesh)
+  }
+
+  function flushDirty() {
+    for (const mesh of assembly.dirty) mesh.instanceMatrix.needsUpdate = true
+    assembly.dirty.clear()
+  }
+
+  function stepAssembly(dt) {
+    const A = assembly
+    const n = bricks.count
+    A.clock += dt * timeScale
+    while (A.next < n && A.delay[A.sorted[A.next]] <= A.clock) A.flying.push(A.sorted[A.next++])
+    let w = 0
+    for (let k = 0; k < A.flying.length; k++) {
+      const i = A.flying[k]
+      const t = (A.clock - A.delay[i]) / DROP_DURATION
+      if (t < 1) {
+        placeBrick(i, A.h * (1 - easeOutCubic(Math.max(0, t))))
+        A.flying[w++] = i
+      } else {
+        placeBrick(i, 0)
+      }
+    }
+    A.flying.length = w
+    flushDirty()
+    if (A.next >= n && w === 0) finishAssembly()
+  }
+
+  function finishAssembly() {
+    if (assemblyDone) return
+    assemblyDone = true
+    for (const mesh of bricks.meshes) {
+      mesh.frustumCulled = true
+      mesh.computeBoundingSphere()
+    }
+    onAssemblyDone?.()
+    enableOrbit()
+    loadWall()
+  }
+
+  // ── Interactive mode ────────────────────────────────────────────────────────
+  const pointer = { ndc: new THREE.Vector2(), inside: false, dirty: false }
+  const raycaster = new THREE.Raycaster()
+  let overWall = false
+
+  function rayAt(clientX, clientY) {
+    const r = canvas.getBoundingClientRect()
+    pointer.ndc.set(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1)
+    raycaster.setFromCamera(pointer.ndc, camera)
+    return raycaster.ray
+  }
 
   function enableOrbit() {
-    if (orbit) return
-    const dx = camPos.x - CENTER.x
-    const dz = camPos.z - CENTER.z
-    orbit = {
-      theta: Math.atan2(dz, dx),
-      pitch: Math.atan2(camPos.y - CENTER.y, Math.hypot(dx, dz)),
-      radius: Math.hypot(camPos.x - CENTER.x, camPos.y - CENTER.y, camPos.z - CENTER.z),
-      velTheta: 0,
-      velPitch: 0,
-      dragging: false,
-    }
-    const clampR = (r) => Math.max(R_MIN, Math.min(R_MAX, r))
-    const pointers = new Map()
-    let pinchDist = 0
-    let pinchRadius = 0
-    let lastX = 0, lastY = 0, lastT = 0
+    if (controls || !model || !assemblyDone) return
+    controls = new FlyControls(camera, canvas, { radius, groundY }) // sets touch-action: none
+    controls.setView(...homeView())
+    controls.wheelEnabled = () => engaged
+    controls.keysEnabled = () => engaged
+    interaction = new BrickInteraction(bricks, { onChange: () => ui.setMovedCount(bricks.moved.size) })
 
-    const dist = () => {
-      const [a, b] = [...pointers.values()]
-      return Math.hypot(a.x - b.x, a.y - b.y)
-    }
+    ui = createUI({
+      root,
+      info: STANDS_INFO,
+      onBack: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+      onResetView: () => controls.flyTo(...homeView(), 900),
+      onResetBricks: () => { interaction.cancel(); bricks.resetAll(); ui.setMovedCount(0) },
+      onFlyTo: (tag) => flyToTag(tag),
+    })
+    const cents = bricks.groupCentroids()
+    ui.setTags(
+      cents
+        .filter((g) => g.count && !/seats/i.test(g.name))
+        .map((g) => ({
+          key: g.name,
+          label0: PRETTY[g.name] || g.name.replace(/-/g, ' '),
+          count: g.count,
+          centroid: g.centroid.clone(),
+          position: new THREE.Vector3(g.centroid.x, g.max.y + radius * 0.02, g.centroid.z),
+        }))
+    )
 
-    canvasEl.addEventListener('pointerdown', (e) => {
-      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
-      canvasEl.setPointerCapture(e.pointerId)
-      if (pointers.size === 1) {
-        orbit.dragging = true
-        orbit.velTheta = 0
-        orbit.velPitch = 0
-        lastX = e.clientX; lastY = e.clientY; lastT = performance.now()
-        canvasEl.classList.add('dragging')
-      } else if (pointers.size === 2) {
-        orbit.dragging = false          // two fingers = pinch zoom, not rotate
-        pinchDist = dist()
-        pinchRadius = orbit.radius
+    controls.onPointer = (x, y) => {
+      rayAt(x, y)
+      pointer.inside = true
+      pointer.dirty = true
+    }
+    canvas.addEventListener('pointerleave', () => {
+      pointer.inside = false
+      if (!interaction.holding) interaction.hover(null)
+      overWall = false
+      canvas.classList.remove('over-brick')
+    })
+    controls.onTap = (x, y) => {
+      const ray = rayAt(x, y)
+      if (interaction.holding) { interaction.click(ray); return }
+      // wall bricks first: they only ever show their message, never lift
+      const wh = wall && wall.pick(raycaster)
+      if (wh && wh.brick) { ui.closeCard(); wallUI.showBrick(wh.brick); return }
+      interaction.click(ray)
+    }
+    controls.onWheel = (dy) => interaction.wheel(dy)
+    controls.touchLookBlocked = () => interaction.holding
+    window.addEventListener('keydown', (e) => {
+      if (e.target.closest?.('input, textarea, [contenteditable]')) return
+      if (!engaged && !interaction.holding) return
+      if (e.code === 'KeyR' && !e.metaKey && !e.ctrlKey) {
+        raycaster.setFromCamera(pointer.ndc, camera)
+        interaction.rotate(raycaster.ray)
+      } else if (e.code === 'Escape') {
+        if (!interaction.cancel() && !ui.closeCard()) wallUI?.close()
       }
     })
-    canvasEl.addEventListener('pointermove', (e) => {
-      if (!pointers.has(e.pointerId)) return
-      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
-      if (pointers.size === 2 && pinchDist > 0) {
-        orbit.radius = clampR(pinchRadius * (pinchDist / Math.max(20, dist())))
-        return
-      }
-      if (!orbit.dragging) return
-      const dxp = e.clientX - lastX
-      const dyp = e.clientY - lastY
-      const now = performance.now()
-      const dtp = Math.max(1, now - lastT)
-      lastX = e.clientX; lastY = e.clientY; lastT = now
-      orbit.theta += dxp * 0.006
-      orbit.pitch = Math.max(0.06, Math.min(1.25, orbit.pitch + dyp * 0.004))
-      orbit.velTheta = (dxp * 0.006) / dtp * 1000
-      orbit.velPitch = (dyp * 0.004) / dtp * 1000
+    kick()
+  }
+
+  // ── Fan wall ────────────────────────────────────────────────────────────────
+  function buildWall() {
+    const types = model.types
+    const type = types.find((t) => t.name === '1x2x3') || types.find((t) => t.name.startsWith('1x2x3'))
+    if (!type) { console.warn('[lego] no 1x2x3 type in the model; fan wall disabled'); return null }
+
+    const colors = {}
+    for (const [name, lin] of Object.entries(WALL_LINEAR)) colors[name] = inkColor(lin)
+    const colorFor = (name) => colors[name] || colors.red
+    // white base × per-instance colour (setColorAt multiplies the material colour)
+    const material = new THREE.MeshToonMaterial({ color: 0xffffff, gradientMap: toonGradient() })
+    material.name = 'fan-wall'
+
+    // Face the home camera: pick the footprint side the camera looks at most directly.
+    const d = HOME_DIR
+    const face = Math.abs(d.x) > Math.abs(d.z)
+      ? new THREE.Vector3(Math.sign(d.x), 0, 0)
+      : new THREE.Vector3(0, 0, Math.sign(d.z))
+    const along = new THREE.Vector3(face.z, 0, -face.x) // wall-local +x after rotating +z onto `face`
+    const half = face.x > 0 ? box.max.x - center.x : face.x < 0 ? center.x - box.min.x
+      : face.z > 0 ? box.max.z - center.z : center.z - box.min.z
+    const length = wallExtent(1, WALL_WIDTH).studs * model.unit
+    const origin = new THREE.Vector3(center.x, box.min.y, center.z)
+      .addScaledVector(face, half + WALL_GAP_STUDS * model.unit)
+      .addScaledVector(along, -length / 2)
+    const frame = new THREE.Matrix4().makeRotationY(Math.atan2(face.x, face.z)).setPosition(origin)
+
+    const w = new FanWall({ geometry: type.geometry, colorFor, material, unit: model.unit, plate: model.plate, width: WALL_WIDTH, frame })
+    scene.add(w.mesh)
+    return w
+  }
+
+  function updateWallTag() {
+    if (!wallTag || !wall) return
+    const top = wall.extent()
+    const c = top.getCenter(new THREE.Vector3())
+    wallTag.position.set(c.x, top.max.y + model.unit * 2, c.z)
+    wallTag.centroid.copy(c)
+  }
+
+  async function loadWall() {
+    wall = buildWall()
+    if (!wall) return
+    wallUI = mountWallUI({
+      root,
+      onOpen: () => ui.closeCard(),
+      onAdded: (saved) => { wall.addBrick(saved); updateWallTag() },
     })
-    const endDrag = (e) => {
-      pointers.delete(e.pointerId)
-      if (pointers.size < 2) pinchDist = 0
-      if (pointers.size === 0 && orbit) { orbit.dragging = false; canvasEl.classList.remove('dragging') }
-    }
-    canvasEl.addEventListener('pointerup', endDrag)
-    canvasEl.addEventListener('pointercancel', endDrag)
-
-    // Trackpad pinch arrives as ctrl+wheel (and cmd/ctrl+scroll wheel works
-    // too); plain wheel is left alone so the page still scrolls.
-    canvasEl.addEventListener('wheel', (e) => {
-      if (!e.ctrlKey && !e.metaKey) return
-      e.preventDefault()
-      orbit.radius = clampR(orbit.radius * (1 + e.deltaY * 0.01))
-    }, { passive: false })
-  }
-
-  const camPos  = new THREE.Vector3(0.55, 0.42, 0.55)
-  const camLook = CENTER.clone()
-
-  const dracoLoader = new DRACOLoader()
-  dracoLoader.setDecoderPath('draco/')
-  const loader = new GLTFLoader()
-  loader.setDRACOLoader(dracoLoader)
-
-  loader.load('models/old-trafford.glb',
-    (gltf) => {
-      dracoLoader.dispose()   // free the decoder workers' WASM memory
-      scene.add(gltf.scene)
-      scene.updateMatrixWorld(true)
-
-      const box = new THREE.Box3()
-      const raw = []
-      gltf.scene.traverse((obj) => {
-        if (!obj.isMesh) return
-        let key = norm(obj.name || '')
-        if (!(key in NORM_STANDS) && !NORM_HIDDEN.has(key) && obj.parent) {
-          key = norm(obj.parent.name || '')
-        }
-        if (NORM_HIDDEN.has(key)) { obj.visible = false; return }
-
-        // Keep each material's authored opacity (the glass panes ship with
-        // alpha-blend opacity < 1) — fades multiply against it in setOp.
-        const cloneMat = (m) => { const c = m.clone(); c.userData.baseOpacity = c.opacity; c.transparent = true; c.opacity = 0; return c }
-        obj.material = Array.isArray(obj.material) ? obj.material.map(cloneMat) : cloneMat(obj.material)
-
-        box.setFromObject(obj)
-        raw.push({ obj, stand: NORM_STANDS[key] || null, restY: obj.position.y, curOpacity: 0, baseY: box.min.y, topY: box.max.y })
-      })
-
-      // Bottom-up build: pieces whose base sits lower drop first, so nothing
-      // falls through geometry that is already in place. Roofs and upper
-      // tiers (higher base) arrive last.
-      let minB = Infinity, maxB = -Infinity, maxTop = -Infinity
-      for (const d of raw) {
-        minB = Math.min(minB, d.baseY)
-        maxB = Math.max(maxB, d.baseY)
-        maxTop = Math.max(maxTop, d.topY)
-      }
-      const span = Math.max(1e-6, maxB - minB)
-      const modelH = Math.max(1e-6, maxTop - minB)
-      for (const d of raw) {
-        const layer = (d.baseY - minB) / span                    // 0 = ground, 1 = roofline
-        d.delay = Math.pow(layer, 0.9) * ASSEMBLY_SPREAD + Math.random() * 0.22
-        d.drop  = modelH * 1.35 + (maxTop - d.topY) * 0.4        // everyone falls in from above the roofline
-      }
-      meshData = raw
-      onProgress(1)
-    },
-    (xhr) => onProgress(xhr.total > 0 ? Math.min(0.999, xhr.loaded / xhr.total) : 0),
-    (err) => console.error('GLB load error', err),
-  )
-
-  window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-  })
-
-  // ── Path helpers ────────────────────────────────────────────────────────────
-  function setPath(waypoints) {
-    let prevTheta = null
-    path = waypoints.map((wp) => {
-      const p = new THREE.Vector3(...wp.position)
-      const dx = p.x - CENTER.x
-      const dz = p.z - CENTER.z
-      const radius = Math.hypot(dx, dz)
-      let theta = Math.atan2(dz, dx)
-      if (prevTheta !== null) {
-        while (theta - prevTheta >  Math.PI) theta -= Math.PI * 2
-        while (theta - prevTheta < -Math.PI) theta += Math.PI * 2
-      }
-      prevTheta = theta
-      return { radius, theta, y: p.y, lookAt: new THREE.Vector3(...wp.lookAt), shift: wp.shift || 0 }
+    const n = () => wall.bricks.length
+    wallTag = ui.pushTag({
+      key: 'fan-wall',
+      label0: 'Fan wall',
+      count: 0,
+      centroid: new THREE.Vector3(),
+      position: new THREE.Vector3(),
+      label: () => `Fan wall · ${n()} brick${n() === 1 ? '' : 's'}`,
+      onClick: () => wallUI.open(),
     })
-  }
-
-  function pathCamera(u, outPos, outLook) {
-    const i = Math.max(0, Math.min(path.length - 2, Math.floor(u)))
-    const f = Math.max(0, Math.min(1, u - i))
-    const a = path[i], b = path[i + 1]
-    const t = smoothstep(f)
-    const radius = a.radius + (b.radius - a.radius) * t
-    const theta  = a.theta  + (b.theta  - a.theta)  * t + smoothYaw
-    const y      = a.y      + (b.y      - a.y)      * t
-    outPos.set(CENTER.x + radius * Math.cos(theta), y, CENTER.z + radius * Math.sin(theta))
-    outLook.lerpVectors(a.lookAt, b.lookAt, t)
-    return a.shift + (b.shift - a.shift) * t
-  }
-
-  const _tPos = new THREE.Vector3()
-  const _tLook = new THREE.Vector3()
-  const _right = new THREE.Vector3()
-  const _fwd = new THREE.Vector3()
-
-  let prevTime = performance.now() / 1000
-
-  requestAnimationFrame(function loop() {
-    requestAnimationFrame(loop)
-    const now = performance.now() / 1000
-    const dt  = Math.min(now - prevTime, 0.1)
-    prevTime  = now
-
-    if (!active) return   // section is off-screen; skip all work
-    if (meshData.length === 0) { renderer.render(scene, camera); return }
-
-    // ── Assembly clock ────────────────────────────────────────────────────
-    if (started) {
-      if (assemblyStart === null) assemblyStart = now
-      if (!assemblyDone) {
-        assemblyClock += dt * (reducedMotion ? 50 : timeScale)
-        if (assemblyClock >= ASSEMBLY_SPREAD + DROP_DURATION + 0.4) {
-          assemblyDone = true
-          onAssemblyDone()
-        }
-      }
-    }
-
-    // ── Camera ────────────────────────────────────────────────────────────
-    smoothU     = expDecay(smoothU, scrollU, 0.02, dt)
-    smoothYaw   = expDecay(smoothYaw, userYawOffset + exploreYaw, 0.05, dt)
-
-    let shift = 0
-    if (orbit && assemblyDone) {
-      // Inertia after release
-      if (!orbit.dragging) {
-        orbit.theta += orbit.velTheta * dt
-        orbit.pitch = Math.max(0.06, Math.min(1.25, orbit.pitch + orbit.velPitch * dt))
-        const decay = Math.pow(0.05, dt)
-        orbit.velTheta *= decay
-        orbit.velPitch *= decay
-      }
-      const r = orbit.radius
-      _tPos.set(
-        CENTER.x + r * Math.cos(orbit.pitch) * Math.cos(orbit.theta),
-        CENTER.y + r * Math.sin(orbit.pitch),
-        CENTER.z + r * Math.cos(orbit.pitch) * Math.sin(orbit.theta),
-      )
-      _tLook.copy(CENTER)
-    } else if (path) {
-      if (!assemblyDone) {
-        // Slow settle from wide to the hero framing while pieces fall.
-        const t = Math.min(1, assemblyClock / (ASSEMBLY_SPREAD + DROP_DURATION))
-        const ease = smoothstep(t)
-        shift = pathCamera(0, _tPos, _tLook)
-        const wide = 1.55 - 0.55 * ease
-        _tPos.sub(CENTER).multiplyScalar(wide).add(CENTER)
-        _tPos.y += 0.22 * (1 - ease)
-      } else {
-        shift = pathCamera(smoothU, _tPos, _tLook)
-      }
+    updateWallTag()
+    let list = []
+    try { list = await listBricks() } catch (err) { console.warn('[lego] fan wall:', err.message) }
+    if (reducedMotion) {
+      wall.setBricks(list)
+      updateWallTag()
     } else {
-      _tPos.copy(camPos); _tLook.copy(camLook)
+      list.forEach((b, k) => setTimeout(() => { wall.addBrick(b); updateWallTag(); kick() }, k * WALL_STAGGER_MS))
     }
+    kick()
+  }
 
-    // Horizontal screen shift so the model sits beside the text column.
-    smoothShift = expDecay(smoothShift, shift, 0.02, dt)
-    if (Math.abs(smoothShift) > 1e-4) {
-      _fwd.subVectors(_tLook, _tPos).normalize()
-      _right.crossVectors(_fwd, camera.up).normalize()
-      _right.multiplyScalar(-smoothShift)
-      _tPos.add(_right); _tLook.add(_right)
+  // ── Frame loop (runs only while the section is on screen) ─────────────────
+  function kick() {
+    if (!raf && active) { last = performance.now(); raf = requestAnimationFrame(loop) }
+  }
+
+  function loop(now) {
+    raf = 0
+    if (!active) return
+    raf = requestAnimationFrame(loop)
+    const dt = Math.min(0.1, Math.max(0, (now - last) / 1000))
+    last = now
+    if (!pipeline) return
+
+    if (assembly && assembly.begun && !assemblyDone) stepAssembly(dt)
+
+    if (controls) {
+      const moved = controls.update(dt)
+      interaction.update(now)
+      if (pointer.inside && (pointer.dirty || moved)) {
+        raycaster.setFromCamera(pointer.ndc, camera)
+        if (interaction.holding) {
+          interaction.move(raycaster.ray)
+          overWall = false
+        } else {
+          overWall = !!(wall && wall.pick(raycaster))
+          interaction.hover(overWall ? null : raycaster.ray)
+        }
+        pointer.dirty = false
+        canvas.classList.toggle('over-brick', interaction.hovered >= 0 || overWall)
+        canvas.classList.toggle('holding', interaction.holding)
+      }
     }
+    wall?.update(now)
 
-    camPos.lerp(_tPos, 1 - Math.pow(0.0008, dt))
-    camLook.lerp(_tLook, 1 - Math.pow(0.0008, dt))
-    camera.position.copy(camPos)
-    camera.lookAt(camLook)
-    // Wider base FOV on narrow screens so the whole ground fits the frame.
-    const baseFov = window.innerWidth < 700 ? 58 : 45
-    camera.fov = Math.max(14, Math.min(88, baseFov + userFovOffset))
+    sky.follow(camera)
+    pipeline.render()
+    ui?.updateTags(camera, root.clientWidth, root.clientHeight, metresPerUnit)
+  }
+
+  function onResize() {
+    const w = root.clientWidth, h = root.clientHeight
+    if (!w || !h) return
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR)
+    renderer.setPixelRatio(dpr)
+    renderer.setSize(w, h, false)
+    camera.aspect = w / h
     camera.updateProjectionMatrix()
+    pipeline?.setSize(w, h, dpr)
+  }
+  new ResizeObserver(onResize).observe(root)
+  onResize()
 
-    // ── Pieces: assembly drop + stand isolation fades ─────────────────────
-    for (const d of meshData) {
-      const target = (activeStand === 'all' || d.stand === activeStand || d.stand === 'field') ? 1 : 0
-
-      let opacity
-      if (!assemblyDone) {
-        const bT = Math.max(0, Math.min(1, (assemblyClock - d.delay) / DROP_DURATION))
-        d.obj.position.y = d.restY + d.drop * (1 - easeOutCubic(bT))
-        // Fade in near the top of the fall, while the piece is still isolated
-        // in the air — by the time it can pass close to placed geometry it is
-        // fully opaque, so no translucent interpenetration is visible.
-        opacity = target === 0 ? 0 : Math.min(1, bT / FADE_PORTION)
-        d.curOpacity = opacity
-      } else {
-        d.obj.position.y = d.restY
-        d.curOpacity = expDecay(d.curOpacity, target, 0.03, dt)
-      }
-
-      const op = Math.max(0, Math.min(1, d.curOpacity))
-      const setOp = (m) => {
-        const base = m.userData.baseOpacity ?? 1
-        m.opacity = op * base
-        m.transparent = m.opacity < 0.99
-      }
-      if (Array.isArray(d.obj.material)) d.obj.material.forEach(setOp)
-      else setOp(d.obj.material)
-    }
-
-    renderer.render(scene, camera)
-  })
+  // Wheel and fly keys only belong to the scene while the section fills the viewport.
+  new IntersectionObserver(
+    (entries) => { for (const e of entries) engaged = e.intersectionRatio >= 0.95 },
+    { threshold: [0, 0.5, 0.9, 0.95, 1] },
+  ).observe(root)
 
   return {
-    start:          () => { started = true },
-    setActive:      (v) => { active = v },
+    start: () => { started = true; beginAssembly() },
+    setActive: (v) => { active = !!v; if (active) kick() },
+    hurryAssembly: () => { if (!assemblyDone) timeScale = HURRY },
     enableOrbit,
-    setPath,
-    setScrollU:     (u) => { scrollU = u },
-    jumpScrollU:    (u) => { scrollU = u; smoothU = u },
-    setFovOffset:   (v) => { userFovOffset = v },
-    setYawOffset:   (v) => { userYawOffset = v },
-    setExploreYaw:  (v) => { exploreYaw = v },
-    setActiveStand: (v) => { activeStand = v },
-    hurryAssembly:  () => { if (!assemblyDone) timeScale = 3.5 },
-    isAssembled:    () => assemblyDone,
+    setPath: () => {}, // kept for API compatibility; the camera is the engine's home view
+    isAssembled: () => assemblyDone,
   }
 }

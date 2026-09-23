@@ -1,0 +1,30 @@
+/* Fan wall UI — matches the Chrona-style chrome: dark ink, paper panels, mono kickers.
+   Embedded in #stadium-live (position: relative), so everything is absolute, not fixed. */
+.wall-ui { --ink: #1f2437; --paper: #eef0f4; --paper-2: #e2e5ec; --mono: ui-monospace, "SF Mono", Menlo, monospace; --serif: Georgia, "Times New Roman", serif; --sans: -apple-system, "Helvetica Neue", Arial, sans-serif; }
+.wall-add { position: absolute; left: 20px; bottom: 20px; z-index: 30; font: 600 13px/1 var(--mono); letter-spacing: .04em; color: var(--paper); background: var(--ink); border: 1px solid #3a4160; border-radius: 999px; padding: 12px 18px; cursor: pointer; box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+.wall-add:hover { background: #2a3150; }
+.wall-sheet, .wall-card { position: absolute; left: 20px; bottom: 20px; z-index: 31; width: min(400px, calc(100% - 40px)); max-height: calc(100% - 80px); overflow: auto; box-sizing: border-box; background: var(--paper); color: var(--ink); border: 1px solid var(--ink); box-shadow: 0 10px 40px rgba(0,0,0,.45); padding: 0 0 16px; }
+.wall-sheet[hidden], .wall-card[hidden] { display: none; }
+.wall-sheet-head, .wall-card-head { display: flex; align-items: center; gap: 12px; background: var(--ink); color: var(--paper); font: 600 11px/1 var(--mono); letter-spacing: .1em; padding: 12px 14px; }
+.wall-card-head .wall-close, .wall-sheet-head .wall-close { margin-left: auto; }
+.wall-close { background: none; border: 0; color: inherit; font-size: 14px; cursor: pointer; padding: 2px 4px; }
+.wall-title { font: 700 22px/1.15 var(--serif); margin: 16px 16px 4px; }
+.wall-hint { font: 13px/1.4 var(--sans); margin: 0 16px 12px; opacity: .75; }
+.wall-colors { display: flex; gap: 8px; margin: 0 16px 12px; }
+.wall-swatch { position: relative; width: 30px; height: 30px; cursor: pointer; }
+.wall-swatch input { position: absolute; opacity: 0; inset: 0; }
+.wall-swatch span { display: block; width: 100%; height: 100%; background: var(--c); border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: inset 0 -4px 0 rgba(0,0,0,.18); }
+.wall-swatch input:checked + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+.wall-sheet textarea, .wall-sheet input[name=name] { width: calc(100% - 32px); margin: 0 16px; box-sizing: border-box; font: 15px/1.4 var(--sans); background: #fff; color: var(--ink); border: 1px solid var(--ink); padding: 10px; resize: vertical; }
+.wall-row { display: flex; align-items: center; margin-top: 8px; }
+.wall-row input { flex: 1; margin-right: 8px !important; }
+.wall-count { font: 11px var(--mono); opacity: .6; margin-right: 16px; }
+.wall-hp { position: absolute; left: -9999px; }
+.wall-actions { display: flex; align-items: center; gap: 12px; margin: 14px 16px 0; }
+.wall-submit { font: 700 12px/1 var(--mono); letter-spacing: .08em; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); padding: 11px 16px; cursor: pointer; }
+.wall-submit:disabled { opacity: .5; cursor: default; }
+.wall-status { font: 12px var(--mono); }
+.wall-card-color { padding: 3px 8px; border: 1px solid #3a4160; border-left: 10px solid var(--c); }
+.wall-card-message { font: 400 20px/1.35 var(--serif); margin: 18px 16px 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.wall-card-who { font: 12px var(--mono); margin: 0 16px; opacity: .7; }
+@media (max-width: 600px) { .wall-add { left: 12px; bottom: 88px; padding: 10px 14px; font-size: 12px; } .wall-sheet, .wall-card { left: 12px; bottom: 12px; width: calc(100% - 24px); } }

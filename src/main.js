@@ -1,5 +1,5 @@
 import './styles/global.css'
-import { initStadium } from './stadium.js'
+import { initStadium } from './stadium-classic.js'
 import { hero, chapters, explore, heroCamera, standCaptions } from './data/story.js'
 
 // How far (in world units) the model is nudged sideways so it sits beside the
