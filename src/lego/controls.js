@@ -36,6 +36,7 @@ export class FlyControls {
     // scene (e.g. only while the section fills the viewport).
     this.wheelEnabled = () => true
     this.keysEnabled = () => true
+    this.arrowsBlocked = () => false // e.g. while a brick is held, arrows belong to the brick
     this.flight = null
     this._lastTap = 0
     this._bind()
@@ -114,6 +115,7 @@ export class FlyControls {
       if (e.target.closest?.('input, textarea, [contenteditable]')) return
       if (e.metaKey || e.ctrlKey) return
       if (!this.keysEnabled()) return
+      if (/^Arrow/.test(e.code) && this.arrowsBlocked()) return
       this.keys.add(e.code)
       if (/^(Arrow|Key[WASDQE])/.test(e.code)) this.flight = null
     })

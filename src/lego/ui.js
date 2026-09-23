@@ -46,8 +46,8 @@ export function createUI({ root, info = {}, onResetView, onResetBricks, onFlyTo,
       <dt>Scroll</dt><dd>zoom · right-drag slides · WASD flies</dd>
       <dt>Double-click</dt><dd>zoom in on a spot</dd>
       <dt>Click a brick</dt><dd>lift it, move the mouse to carry it, click to drop</dd>
-      <dt>R</dt><dd>rotate the brick you're holding</dd>
-      <dt>Scroll</dt><dd>raise or lower it, one plate at a time</dd>
+      <dt>R · ← →</dt><dd>rotate the brick you're holding</dd>
+      <dt>Scroll · ↑ ↓</dt><dd>raise or lower it, one plate at a time</dd>
       <dt>Esc</dt><dd>put it back where it was</dd>
       <dt>Reset bricks</dt><dd>rebuilds the whole stadium</dd>
     </dl>`

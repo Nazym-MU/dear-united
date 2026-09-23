@@ -87,6 +87,7 @@ export class BrickInteraction {
   move(ray) {
     const h = this.held
     if (!h || h.dropping || !ray) return
+    h.lastRay = ray.clone()
     if (!h.grab) { this._grab(ray); return }
     _plane.set(new THREE.Vector3(0, 1, 0), -this._carryY())
     if (!ray.intersectPlane(_plane, _p)) return
@@ -106,15 +107,23 @@ export class BrickInteraction {
     const h = this.held
     if (!h) return false
     h.dy += (deltaY < 0 ? 1 : -1) * this.plate
+    // The carry plane just moved, so the same pointer ray now meets it somewhere else.
+    // Re-derive the grab offset from the last ray so the brick rises straight up instead
+    // of sliding towards or away from the camera.
+    if (h.grab && h.lastRay) {
+      _plane.set(new THREE.Vector3(0, 1, 0), -this._carryY())
+      if (h.lastRay.intersectPlane(_plane, _p)) h.grab.set(_p.x - h.dx, 0, _p.z - h.dz)
+    }
     this._apply()
     return true
   }
 
+  /** ray may be null (toolbar button): the last pointer ray over the canvas is used. */
   rotate(ray) {
     const h = this.held
     if (!h) return false
     h.quarter = (h.quarter + 1) % 4
-    this.move(ray) // re-snap: rotating an odd x even brick shifts its lattice phase
+    this.move(ray || h.lastRay) // re-snap: rotating an odd x even brick shifts its lattice phase
     this._apply()
     this.onChange('rotate', h.i)
     return true

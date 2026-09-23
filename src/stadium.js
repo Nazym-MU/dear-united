@@ -232,6 +232,7 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
     raycaster.setFromCamera(pointer.ndc, camera)
     return raycaster.ray
   }
+  rayAt.last = () => { raycaster.setFromCamera(pointer.ndc, camera); return raycaster.ray }
 
   function enableOrbit() {
     if (controls || !model || !assemblyDone) return
@@ -259,11 +260,11 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
       onResetBricks: () => { interaction.cancel(); bricks.resetAll(); ui.setMovedCount(0) },
       onFlyTo: (tag) => flyToTag(tag),
       onHoldAction: (act) => {
-        raycaster.setFromCamera(pointer.ndc, camera)
-        if (act === 'rotate') interaction.rotate(raycaster.ray)
+        // toolbar clicks happen off the canvas: never re-aim the brick at the toolbar
+        if (act === 'rotate') interaction.rotate(null)
         else if (act === 'up') interaction.wheel(-1)
         else if (act === 'down') interaction.wheel(1)
-        else if (act === 'drop') interaction.click(raycaster.ray)
+        else if (act === 'drop') interaction.drop()
         else if (act === 'cancel') interaction.cancel()
       },
     })
@@ -310,13 +311,17 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
       return ray.intersectPlane(groundPlane, p) ? p : null
     }
     controls.touchLookBlocked = () => interaction.holding
+    controls.arrowsBlocked = () => interaction.holding // arrows steer the brick, not the camera
     window.addEventListener('keydown', (e) => {
       if (e.target.closest?.('input, textarea, [contenteditable]')) return
       if (!engaged && !interaction.holding) return
-      if (e.code === 'KeyR' && !e.metaKey && !e.ctrlKey) {
-        raycaster.setFromCamera(pointer.ndc, camera)
-        interaction.rotate(raycaster.ray)
-      } else if (e.code === 'Escape') {
+      if (e.metaKey || e.ctrlKey) return
+      if (e.code === 'KeyR' || (interaction.holding && (e.code === 'ArrowLeft' || e.code === 'ArrowRight'))) {
+        interaction.rotate(pointer.inside ? rayAt.last() : null)
+        e.preventDefault()
+      } else if (interaction.holding && e.code === 'ArrowUp') { interaction.wheel(-1); e.preventDefault() }
+      else if (interaction.holding && e.code === 'ArrowDown') { interaction.wheel(1); e.preventDefault() }
+      else if (e.code === 'Escape') {
         if (!interaction.cancel() && !ui.closeCard()) wallUI?.close()
       }
     })
