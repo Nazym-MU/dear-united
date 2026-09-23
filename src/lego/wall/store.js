@@ -46,13 +46,20 @@ export function sanitize({ color, message, name, lang }) {
   return { color: c, message: m, name: n, lang: l }
 }
 
+const PAGE = 1000 // Supabase caps a single REST response at 1,000 rows; page through them
+
 export async function listBricks() {
   if (!isLive()) return readLocal()
-  const res = await fetch(`${URL}/rest/v1/${TABLE}?select=id,color,message,name,lang,created_at&order=id.asc`, {
-    headers: headers(),
-  })
-  if (!res.ok) throw new Error(`wall load failed (${res.status})`)
-  const rows = await res.json()
+  const rows = []
+  for (let from = 0; ; from += PAGE) {
+    const res = await fetch(`${URL}/rest/v1/${TABLE}?select=id,color,message,name,lang,created_at&order=id.asc`, {
+      headers: headers({ Range: `${from}-${from + PAGE - 1}` }),
+    })
+    if (!res.ok && res.status !== 416) throw new Error(`wall load failed (${res.status})`)
+    const page = res.ok ? await res.json() : []
+    rows.push(...page)
+    if (page.length < PAGE) break
+  }
   return rows.length ? rows : [FOUNDING_BRICK]
 }
 

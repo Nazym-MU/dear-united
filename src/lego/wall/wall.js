@@ -20,7 +20,7 @@ export class FanWall {
    * @param {number} o.width bricks per row
    * @param {THREE.Matrix4} o.frame world transform of the wall's origin (bottom-left corner, wall runs along +x, up +y)
    */
-  constructor({ geometry, colorFor, material, unit, plate, width = 16, frame = new THREE.Matrix4(), capacity = 4096 }) {
+  constructor({ geometry, colorFor, material, unit, plate, width = 16, frame = new THREE.Matrix4(), capacity = 20000 }) {
     this.geometry = geometry
     this.colorFor = colorFor
     this.unit = unit
@@ -47,6 +47,7 @@ export class FanWall {
   get group() { return this.mesh }
 
   setBricks(list) {
+    if (list.length > this.mesh.instanceMatrix.count) list = list.slice(0, this.mesh.instanceMatrix.count)
     this.bricks = list.slice()
     this.mesh.count = list.length
     list.forEach((b, i) => {
@@ -74,6 +75,7 @@ export class FanWall {
   /** Add a brick: it appears above its slot and drops in. */
   addBrick(brick) {
     const i = this.bricks.length
+    if (i >= this.mesh.instanceMatrix.count) { console.warn('[wall] full: capacity', this.mesh.instanceMatrix.count); return -1 }
     this.bricks.push(brick)
     this.mesh.count = i + 1
     const to = this.matrixFor(i)
