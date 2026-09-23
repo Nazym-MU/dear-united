@@ -116,6 +116,7 @@ export class BrickInteraction {
     h.quarter = (h.quarter + 1) % 4
     this.move(ray) // re-snap: rotating an odd x even brick shifts its lattice phase
     this._apply()
+    this.onChange('rotate', h.i)
     return true
   }
 

@@ -24,6 +24,7 @@ import { wallExtent } from './lego/wall/layout.js'
 import { mountWallUI } from './lego/wall/ui.js'
 import { listBricks } from './lego/wall/store.js'
 import { STANDS_INFO } from './data/stands-info.js'
+import { play as playSound, unlock as unlockSound } from './lego/sound.js'
 
 const REAL_WORLD_LENGTH_M = 230 // the stadium's longest side reads as ~230 m
 
@@ -237,7 +238,15 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
     controls.setView(...homeView())
     controls.wheelEnabled = () => engaged
     controls.keysEnabled = () => engaged
-    interaction = new BrickInteraction(bricks, { onChange: () => ui.setMovedCount(bricks.moved.size) })
+    interaction = new BrickInteraction(bricks, {
+      onChange: (what) => {
+        ui.setMovedCount(bricks.moved.size)
+        if (what === 'lift') playSound('lift')
+        else if (what === 'drop' || what === 'cancel') playSound('snap')
+        else if (what === 'rotate') playSound('tick')
+      },
+    })
+    canvas.addEventListener('pointerdown', unlockSound, { passive: true })
 
     ui = createUI({
       root,
@@ -349,7 +358,7 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
     wallUI = mountWallUI({
       root,
       onOpen: () => ui.closeCard(),
-      onAdded: (saved) => { wall.addBrick(saved); updateWallTag() },
+      onAdded: (saved) => { wall.addBrick(saved); updateWallTag(); setTimeout(() => playSound('place'), 620) },
     })
     const n = () => wall.bricks.length
     wallTag = ui.pushTag({
