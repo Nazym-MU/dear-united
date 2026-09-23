@@ -48,7 +48,7 @@ export async function loadModel(base = 'models/lego/', { onProgress } = {}) {
     }
     if (!geometry.attributes.normal) geometry.computeVertexNormals()
     geometry.computeBoundingBox()
-    return { name: t.name, size: t.size, studs: t.studs || [], geometry, map, parts }
+    return { name: t.name, size: t.size, studs: t.studs || [], geometry, map, parts, doubleSided: !!t.doubleSided }
   })
 
   const materials = json.materials.map((m) => ({

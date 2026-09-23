@@ -79,7 +79,18 @@ export class Bricks {
     for (const [key, list] of byPair) {
       const ti = Math.floor(key / nm), mi = key % nm
       const type = model.types[ti]
-      const mesh = new THREE.InstancedMesh(type.geometry, materialsFor(mi, type), list.length)
+      // A few source bricks have inside-out faces the pipeline could not repair without
+      // opening holes; the export flags them and they render both sides.
+      let mats = materialsFor(mi, type)
+      if (type.doubleSided) {
+        const ds = (m) => {
+          const key = `ds:${m.uuid}`
+          if (!matCache.has(key)) { const c = m.clone(); c.side = THREE.DoubleSide; c.onBeforeCompile = m.onBeforeCompile; c.customProgramCacheKey = m.customProgramCacheKey; matCache.set(key, c) }
+          return matCache.get(key)
+        }
+        mats = Array.isArray(mats) ? mats.map(ds) : ds(mats)
+      }
+      const mesh = new THREE.InstancedMesh(type.geometry, mats, list.length)
       mesh.name = `${type.name}|${model.materials[mi].name}`
       mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
       mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(list.length * 3), 3)
