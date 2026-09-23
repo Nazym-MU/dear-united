@@ -8,7 +8,10 @@ export const COLORS = ['red', 'white', 'black', 'gray', 'yellow', 'blue', 'green
 export const MAX_MESSAGE = 280
 export const MAX_NAME = 40
 
-import { SUPABASE_URL as URL, SUPABASE_ANON_KEY as KEY } from './config.js'
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js'
+// Accept the project URL with or without a trailing /rest/v1/ (both get pasted).
+const URL = String(SUPABASE_URL || '').replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '')
+const KEY = String(SUPABASE_ANON_KEY || '').trim()
 const TABLE = 'wall_bricks'
 const LS_KEY = 'lego-trafford:wall'
 
