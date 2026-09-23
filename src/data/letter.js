@@ -6,10 +6,10 @@ export const letter = {
 
   salutation: 'Dear United,',
   paragraphs: [
-    'I became a fan at eleven, with no idea how much you would come to shape my life. You are my way of life, my love, my joy and my heartbreak, my muse and my energy. Thank you for always being by my side.',
-    'My dream is to visit Old Trafford with my dad. Scroll down a little and you\'ll see a model I made. The Lego set no longer exists, so I rebuilt it from scratch, modeling each brick and assembling them one by one, about 100 hours of work.',
+    'I became a fan at 11 with no idea how much you would come to shape my life. I visited my first game at Old Trafford on August 30, 2026.',
+    'Scroll down a little and you\'ll see the model I made. I built it from scratch, modeling each brick and assembling them one by one.',
     'I love you!',
   ],
-  signoff: 'Yours,',
+  signoff: '',
   signature: '@nazym_manutd',
 }
