@@ -101,6 +101,9 @@ export class FanWall {
       if (t >= 1) this.anim.delete(i)
     }
     this.mesh.instanceMatrix.needsUpdate = true
+    // Bricks start above the wall, so the sphere computed at addBrick() time no longer
+    // covers them once they land; refresh it or raycasts (clicks, hover) miss the wall.
+    if (!this.anim.size) this.mesh.computeBoundingSphere()
   }
 
   /** Ray-pick a wall brick. Returns { index, brick, point } or null. */
