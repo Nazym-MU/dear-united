@@ -1,6 +1,6 @@
 // Embeds the LEGO stadium as the letter page's continuation: scroll past the
 // letter and the ground assembles itself brick by brick, then hands the camera
-// to the visitor (drag to look, scroll to fly, click a brick to lift it).
+// to the visitor (drag to turn, scroll to zoom, click a brick to lift it).
 //
 // Nothing 3D happens while the letter is being read: the stadium module (three
 // + the engine) is only imported, and the model only fetched, once the section
@@ -16,8 +16,8 @@ const hintEl     = document.getElementById('stadium-hint')
 
 const coarse = window.matchMedia('(pointer: coarse)').matches
 hintEl.textContent = coarse
-  ? 'drag to look · pinch to fly · tap a brick to lift it'
-  : 'drag to look · scroll to fly · click a brick to lift it'
+  ? 'drag to turn · pinch to zoom · tap a brick to lift it'
+  : 'drag to turn · scroll to zoom · click a brick to lift it'
 
 let stadium = null     // resolved API
 let booting = null     // Promise<API>

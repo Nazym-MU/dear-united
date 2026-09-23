@@ -67,6 +67,13 @@ export function createBrickMaterial(def, map = null) {
   } else if (kind === 'sticker' && map) {
     m.map = map
     m.color.set(0xffffff)
+    // Stickers sit flush on the brick behind them, so at this scale the two faces
+    // z-fight (posters vanish or shimmer). Pull the sticker a hair toward the camera.
+    m.polygonOffset = true
+    m.polygonOffsetFactor = -2
+    m.polygonOffsetUnits = -2
+    map.anisotropy = 8
+    map.needsUpdate = true
   }
   if (kind !== 'glass' && isGlowColor(def.color, def.name)) {
     m.color.copy(GLOW)

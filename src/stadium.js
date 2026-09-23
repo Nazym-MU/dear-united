@@ -280,6 +280,15 @@ export function initStadium(canvas, { onProgress, onAssemblyDone, autoStart = tr
       interaction.click(ray)
     }
     controls.onWheel = (dy) => interaction.wheel(dy)
+    // double-click: re-centre the orbit pivot on the brick (or ground) under the cursor
+    const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -groundY)
+    controls.onDoubleTap = (x, y) => {
+      const ray = rayAt(x, y)
+      const hit = bricks.pick(ray)
+      if (hit && hit.point) return hit.point.clone()
+      const p = new THREE.Vector3()
+      return ray.intersectPlane(groundPlane, p) ? p : null
+    }
     controls.touchLookBlocked = () => interaction.holding
     window.addEventListener('keydown', (e) => {
       if (e.target.closest?.('input, textarea, [contenteditable]')) return
